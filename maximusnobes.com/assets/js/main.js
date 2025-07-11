@@ -213,20 +213,36 @@ window.addEventListener("scroll", () => {
 
 // Each bottom navigation menu items active on page scroll.
 window.addEventListener("scroll", () => {
-   const navMenuSections = document.querySelectorAll(".nav-menu-section");
-   const scrollY = window.pageYOffset;
+  const navMenuSections = document.querySelectorAll(".nav-menu-section");
+  const navLinks = document.querySelectorAll(".bottom-nav .menu li a");
+  const scrollY = window.pageYOffset;
 
-   navMenuSections.forEach((navMenuSection) => {
-      let sectionHeight = navMenuSection.offsetHeight;
-      let sectionTop = navMenuSection.offsetTop - 50;
-      let id = navMenuSection.getAttribute("id");
+  // Loop through each section to check its position
+  navMenuSections.forEach(current => {
+    let sectionHeight = current.offsetHeight;
+    let sectionTop = current.offsetTop - 50;
+    let sectionId = current.getAttribute("id");
+    let correspondingLink = document.querySelector(".bottom-nav .menu li a[href*=" + sectionId + "]");
 
-      if(scrollY > sectionTop && scrollY <= sectionTop + sectionHeight){
-         document.querySelector(".bottom-nav .menu li a[href*=" + id + "]").classList.add("current");
-      }else{
-         document.querySelector(".bottom-nav .menu li a[href*=" + id + "]").classList.remove("current");
-      }
-   });
+    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
+      correspondingLink.classList.add("current");
+    } else {
+      correspondingLink.classList.remove("current");
+    }
+  });
+
+  // --- SPECIAL FIX FOR LAST SECTION ---
+  // Check if user has scrolled to the very bottom of the page
+  const atBottom = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 2; // -2 for a small buffer
+
+  if (atBottom) {
+    // If at the bottom, deactivate all links and only activate the last one
+    navLinks.forEach(link => link.classList.remove("current"));
+    const lastLink = document.querySelector(".bottom-nav .menu li:last-child a");
+    if (lastLink) {
+      lastLink.classList.add("current");
+    }
+  }
 });
 
 // Javascript to show bottom navigation menu on home(page load).
