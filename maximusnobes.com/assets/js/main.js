@@ -113,27 +113,39 @@ keyprojectsCardsWithModals.forEach((keyprojectsCardWithModal) => {
    const keyprojectsModal = keyprojectsCardWithModal.querySelector(".keyprojects-modal");
    const modalCloseBtn = keyprojectsCardWithModal.querySelector(".modal-close-btn");
 
-   keyprojectsCard.addEventListener("click", () => {
-      keyprojectsBackdrop.style.display = "flex";
+   const closeModal = () => {
+      // Remove the active classes to trigger the fade-out animation
+      keyprojectsBackdrop.classList.remove("active");
+      keyprojectsModal.classList.remove("active");
 
-      setTimeout(() => {
-         keyprojectsBackdrop.classList.add("active");
-      }, 300);
-      
-      setTimeout(() => {
-         keyprojectsModal.classList.add("active");
-      }, 300);
-   });
-
-   modalCloseBtn.addEventListener("click", () => {
+      // Wait for the animation to finish before hiding the element completely
       setTimeout(() => {
          keyprojectsBackdrop.style.display = "none";
-      }, 500);
-      
+      }, 500); // This duration should match your CSS transition time
+   }
+
+   // --- OPEN MODAL ---
+   keyprojectsCard.addEventListener("click", () => {
+      // Make the backdrop element visible in the layout
+      keyprojectsBackdrop.style.display = "flex";
+
+      // Use a short timeout to allow the display property to apply before adding the transition class
       setTimeout(() => {
-         keyprojectsBackdrop.classList.remove("active");
-         keyprojectsModal.classList.remove("active");
-      }, 100);
+         keyprojectsBackdrop.classList.add("active");
+         keyprojectsModal.classList.add("active");
+      }, 20);
+   });
+
+   // --- CLOSE MODAL (Event Listeners) ---
+   // Listen for a click on the 'X' button
+   modalCloseBtn.addEventListener("click", closeModal);
+
+   // ADDED THIS: Listen for a click on the background
+   keyprojectsBackdrop.addEventListener("click", (event) => {
+      // Only close if the click is on the backdrop itself, not on the modal window
+      if (event.target === keyprojectsBackdrop) {
+         closeModal();
+      }
    });
 });
 
