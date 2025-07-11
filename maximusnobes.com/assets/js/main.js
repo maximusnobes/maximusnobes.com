@@ -127,7 +127,7 @@ keyprojectsCardsWithModals.forEach((keyprojectsCardWithModal) => {
 
    modalCloseBtn.addEventListener("click", () => {
       setTimeout(() => {
-         keyprojectsackdrop.style.display = "none";
+         keyprojectsBackdrop.style.display = "none";
       }, 500);
       
       setTimeout(() => {
