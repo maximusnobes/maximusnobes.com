@@ -1035,7 +1035,7 @@ body{
 .community-involvement .resume-line{
    background: var(--primary-color);
    width: 2px;
-   height: 505px;
+   height: 510px;
 }
 
 .education, .experience, .community-involvement{
@@ -2316,4 +2316,10 @@ body{
    .to-top-btn {
       display: none;
   }
+}
+
+/* Center the single card in the Awards section */
+.awards .skill-container {
+  grid-template-columns: 1fr;
+  max-width: 550px; /* Optional: Adjusts the width of the card's container */
 }
