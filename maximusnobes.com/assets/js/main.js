@@ -124,19 +124,22 @@ keyprojectsCardsWithModals.forEach((keyprojectsCardWithModal) => {
 /* =====================================================
    Testimonial Swiper
 ===================================================== */
-var swiper = new Swiper(".sue-client-swiper", {
-   slidesPerView: 1,
-   spaceBetween: 30,
-   loop: true,
-   pagination: {
-     el: ".swiper-pagination",
-     clickable: true,
-   },
-   navigation: {
-     nextEl: ".swiper-button-next",
-     prevEl: ".swiper-button-prev",
-   },
-});
+const testimonialSwiper = document.querySelector(".sue-client-swiper");
+if (testimonialSwiper) {
+    var swiper = new Swiper(testimonialSwiper, {
+       slidesPerView: 1,
+       spaceBetween: 30,
+       loop: true,
+       pagination: {
+         el: ".swiper-pagination",
+         clickable: true,
+       },
+       navigation: {
+         nextEl: ".swiper-button-next",
+         prevEl: ".swiper-button-prev",
+       },
+    });
+}
 
 /* =====================================================
    Send/Receive emails from contact form - EmailJS
@@ -252,4 +255,100 @@ window.addEventListener("scroll", () => {
    Bottom Nav Buttons & Initial State
 ===================================================== */
 window.addEventListener("DOMContentLoaded", () => {
-   if (window.scrollY < 10 &&
+   if (window.scrollY < 10 && bottomNav) {
+      bottomNav.classList.add("active");
+   }
+});
+
+if (menuHideBtn) {
+    menuHideBtn.addEventListener("click", () => {
+        bottomNav.classList.remove("active");
+        menuHideBtn.classList.remove("active");
+        menuShowBtn.classList.add("active");
+    });
+}
+
+if (menuShowBtn) {
+    menuShowBtn.addEventListener("click", () => {
+        bottomNav.classList.add("active");
+        menuHideBtn.classList.add("active");
+        menuShowBtn.classList.remove("active");
+    });
+}
+
+/* =====================================================
+   Customized cursor on mousemove
+===================================================== */
+const cursor = document.querySelector(".cursor");
+if (cursor) {
+    const cursorDot = cursor.querySelector(".cursor-dot");
+    const cursorCircle = cursor.querySelector(".cursor-circle");
+    document.addEventListener("mousemove", (e) => {
+       let x = e.clientX;
+       let y = e.clientY;
+       cursorDot.style.top = y + "px";
+       cursorDot.style.left = x + "px";
+       cursorCircle.style.top = y + "px";
+       cursorCircle.style.left = x + "px";
+    });
+
+    const cursorHoverlinks = document.querySelectorAll("body a, .theme-btn, .sue-main-btn, .keyprojects-card, .swiper-button-next, .swiper-button-prev, .swiper-pagination-bullet, .service-card, .contact-social-links li, .contact-form .submit-btn, .menu-show-btn, .menu-hide-btn");
+    cursorHoverlinks.forEach((cursorHoverlink) => {
+       cursorHoverlink.addEventListener("mouseover", () => {
+          cursorDot.classList.add("large");
+          cursorCircle.style.display = "none";
+       });
+       cursorHoverlink.addEventListener("mouseout", () => {
+          cursorDot.classList.remove("large");
+          cursorCircle.style.display = "block";
+       });
+    });
+}
+
+/* =====================================================
+   Website dark/light theme
+===================================================== */
+const themeBtn = document.querySelector(".theme-btn");
+if (themeBtn) {
+    themeBtn.addEventListener("click", () => {
+       themeBtn.classList.toggle("active-sun-icon");
+       document.body.classList.toggle("light-theme");
+       const getCurrentIcon = () => themeBtn.classList.contains("active-sun-icon") ? "sun" : "moon";
+       const getCurrentTheme = () => document.body.classList.contains("light-theme") ? "light" : "dark";
+       localStorage.setItem("sue-saved-icon", getCurrentIcon());
+       localStorage.setItem("sue-saved-theme", getCurrentTheme());
+    });
+
+    document.addEventListener("DOMContentLoaded", () => {
+        const savedIcon = localStorage.getItem("sue-saved-icon");
+        const savedTheme = localStorage.getItem("sue-saved-theme");
+        if (savedIcon) {
+            themeBtn.classList[savedIcon === "sun" ? "add" : "remove"]("active-sun-icon");
+        }
+        if (savedTheme) {
+            document.body.classList[savedTheme === "light" ? "add" : "remove"]("light-theme");
+        }
+    });
+}
+
+/* =====================================================
+   ScrollReveal JS animations
+===================================================== */
+if (typeof ScrollReveal !== 'undefined') {
+    ScrollReveal({
+       distance: '60px',
+       duration: 2500,
+       delay: 400
+    });
+
+    ScrollReveal().reveal('.avatar-img', { delay: 100, origin: 'top' });
+    ScrollReveal().reveal('.avatar-info, .section-title', { delay: 300, origin: 'top' });
+    ScrollReveal().reveal('.home-social, .home-scroll-btn, .copy-right', { delay: 600, origin: 'bottom' });
+    ScrollReveal().reveal('.about-img', { delay: 700, origin: 'top' });
+    ScrollReveal().reveal('.about-info, .sue-footer .sue-logo', { delay: 300, origin: 'bottom' });
+    ScrollReveal().reveal('.pro-card, .about-buttons .sue-main-btn, .resume-tabs .tab-btn, .keyprojects-tabs .tab-btn', { delay: 500, origin: 'right', interval: 200 });
+    ScrollReveal().reveal('#resume .section-content', { delay: 700, origin: 'bottom' });
+    ScrollReveal().reveal('.service-card, .keyprojects-card, .contact-item, .contact-social-links li, .footer-menu .menu-item', { delay: 300, origin: 'bottom', interval: 300 });
+    ScrollReveal().reveal('.sue-client-swiper, .contact-form-body', { delay: 700, origin: 'right' });
+    ScrollReveal().reveal('.contact-info h3', { delay: 100, origin: 'bottom', interval: 300 });
+}
