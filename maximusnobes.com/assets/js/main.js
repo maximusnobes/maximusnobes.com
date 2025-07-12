@@ -231,8 +231,36 @@ window.addEventListener("scroll", () => {
     }
   });
 
- // Each bottom navigation menu items active on page scroll.
+// Each bottom navigation menu items active on page scroll.
+const bottomNav = document.querySelector(".bottom-nav");
+const menuHideBtn = document.querySelector(".menu-hide-btn");
+const menuShowBtn = document.querySelector(".menu-show-btn");
+var navTimeout;
+
 window.addEventListener("scroll", () => {
+    // --- Visibility Logic (Shows/Hides the menu bar) ---
+    bottomNav.classList.add("active");
+    menuShowBtn.classList.remove("active");
+
+    // Hide the 'close' button when at the top of the page
+    if (window.scrollY < 10) {
+        menuHideBtn.classList.remove("active");
+    } else {
+        menuHideBtn.classList.add("active");
+    }
+
+    // After a pause in scrolling, hide the menu and show the 'open' button
+    function scrollStopped() {
+        // Don't hide the menu if we are at the very top
+        if(window.scrollY > 10) {
+            bottomNav.classList.remove("active");
+            menuShowBtn.classList.add("active");
+        }
+    }
+    clearTimeout(navTimeout);
+    navTimeout = setTimeout(scrollStopped, 2500);
+
+    // --- Highlighting Logic (Adds 'current' class to the correct link) ---
     const navMenuSections = document.querySelectorAll(".nav-menu-section");
     const navLinks = document.querySelectorAll(".bottom-nav .menu li a");
     const scrollY = window.pageYOffset;
@@ -243,7 +271,6 @@ window.addEventListener("scroll", () => {
     navMenuSections.forEach(current => {
         const sectionHeight = current.offsetHeight;
         const sectionTop = current.offsetTop - 50;
-
         if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
             currentSectionId = current.getAttribute("id");
         }
@@ -261,42 +288,22 @@ window.addEventListener("scroll", () => {
     if (activeLink) {
         activeLink.classList.add("current");
     } else if (scrollY < 50) {
-        // Default to home if at the top
         document.querySelector(".bottom-nav .menu a[href='#home']").classList.add("current");
     }
 });
 
 // Hide bottom navigation menu on click menu-hide-btn.
 menuHideBtn.addEventListener("click", () => {
-   bottomNav.classList.toggle("active");
-   menuHideBtn.classList.toggle("active");
-   menuShowBtn.classList.toggle("active");
+    bottomNav.classList.remove("active");
+    menuHideBtn.classList.remove("active");
+    menuShowBtn.classList.add("active");
 });
 
 // Show bottom navigation menu on click menu-show-btn.
 menuShowBtn.addEventListener("click", () => {
-   bottomNav.classList.toggle("active");
-   menuHideBtn.classList.add("active");
-   menuShowBtn.classList.toggle("active");
-});
-
-/* =====================================================
-   To-top-button with scroll indicator bar
-===================================================== */
-window.addEventListener("scroll", () => {
-   const toTopBtn = document.querySelector(".to-top-btn");
-
-   toTopBtn.classList.toggle("active", window.scrollY > 0);
-
-   // Scroll indicator bar
-   const scrollIndicatorBar = document.querySelector(".scroll-indicator-bar");
-
-   const pageScroll = document.body.scrollTop || document.documentElement.scrollTop;
-   const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-
-   const scrollValue = (pageScroll / height) * 100;
-
-   scrollIndicatorBar.style.height = scrollValue + "%";
+    bottomNav.classList.add("active");
+    menuHideBtn.classList.add("active");
+    menuShowBtn.classList.remove("active");
 });
 
 /* =====================================================
