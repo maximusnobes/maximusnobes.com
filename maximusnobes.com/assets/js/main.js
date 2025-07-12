@@ -176,83 +176,67 @@ var swiper = new Swiper(".sue-client-swiper", {
    });
 })();
 
-maxContactForm = document.getElementById("max-contact-form");
-maxContactFormAlert = document.querySelector(".contact-form-alert");
+const maxContactForm = document.getElementById("max-contact-form");
+const maxContactFormAlert = document.querySelector(".contact-form-alert");
 
-maxContactForm.addEventListener('submit', function(event) {
-   event.preventDefault();
-   // these IDs from the previous steps
-   emailjs.sendForm('service_x6gqeyr', 'template_xmtrqlg', '#max-contact-form')
-       .then(() => {
-         //   console.log('SUCCESS!');
-         maxContactFormAlertContactFormAlert.innerHTML = "<span>Your message sent successfully!</span> <i class='ri-checkbox-circle-fill'></i>";
-         maxContactForm.reset();
+if (maxContactForm) {
+    maxContactForm.addEventListener('submit', function(event) {
+       event.preventDefault();
+       // these IDs from the previous steps
+       emailjs.sendForm('service_x6gqeyr', 'template_xmtrqlg', '#max-contact-form')
+           .then(() => {
+             //   console.log('SUCCESS!');
+             maxContactFormAlert.innerHTML = "<span>Your message sent successfully!</span> <i class='ri-checkbox-circle-fill'></i>";
+             maxContactForm.reset();
+    
+             setTimeout(() => {
+                maxContactFormAlert.innerHTML = "";
+             }, 5000);
+           }, (error) => {
+             //   console.log('FAILED...', error);
+             maxContactFormAlert.innerHTML = "<span>Message not sent</span> <i class='ri-error-warning-fill'></i>";
+             maxContactFormAlert.title = error;
+           });
+    });
+}
 
-         setTimeout(() => {
-            sueContactFormAlert.innerHTML = "";
-         }, 5000);
-       }, (error) => {
-         //   console.log('FAILED...', error);
-         maxContactFormAlert.innerHTML = "<span>Message not sent</span> <i class='ri-error-warning-fill'></i>";
-         maxContactFormAlert.title = error;
-       });
-});
 
 /* =====================================================
    Shrink the height of the header on scroll
 ===================================================== */
 window.addEventListener("scroll", () => {
    const sueHeader = document.querySelector(".sue-header");
-
    sueHeader.classList.toggle("shrink", window.scrollY > 0);
 });
 
 /* =====================================================
    Bottom navigation menu
 ===================================================== */
-
-// Each bottom navigation menu items active on page scroll.
-window.addEventListener("scroll", () => {
-  const navMenuSections = document.querySelectorAll(".nav-menu-section");
-  const navLinks = document.querySelectorAll(".bottom-nav .menu li a");
-  const scrollY = window.pageYOffset;
-
-  // Loop through each section to check its position
-  navMenuSections.forEach(current => {
-    let sectionHeight = current.offsetHeight;
-    let sectionTop = current.offsetTop - 50;
-    let sectionId = current.getAttribute("id");
-    let correspondingLink = document.querySelector(".bottom-nav .menu li a[href*=" + sectionId + "]");
-
-    if (scrollY > sectionTop && scrollY <= sectionTop + sectionHeight) {
-      correspondingLink.classList.add("current");
-    } else {
-      correspondingLink.classList.remove("current");
-    }
-  });
-
-// Each bottom navigation menu items active on page scroll.
 const bottomNav = document.querySelector(".bottom-nav");
 const menuHideBtn = document.querySelector(".menu-hide-btn");
 const menuShowBtn = document.querySelector(".menu-show-btn");
 var navTimeout;
+
+// Javascript to show bottom navigation menu on home(page load).
+window.addEventListener("DOMContentLoaded", () => {
+    if (window.scrollY < 10) {
+        bottomNav.classList.add("active");
+    }
+});
 
 window.addEventListener("scroll", () => {
     // --- Visibility Logic (Shows/Hides the menu bar) ---
     bottomNav.classList.add("active");
     menuShowBtn.classList.remove("active");
 
-    // Hide the 'close' button when at the top of the page
     if (window.scrollY < 10) {
         menuHideBtn.classList.remove("active");
     } else {
         menuHideBtn.classList.add("active");
     }
 
-    // After a pause in scrolling, hide the menu and show the 'open' button
     function scrollStopped() {
-        // Don't hide the menu if we are at the very top
-        if(window.scrollY > 10) {
+        if (window.scrollY > 10) {
             bottomNav.classList.remove("active");
             menuShowBtn.classList.add("active");
         }
@@ -267,7 +251,6 @@ window.addEventListener("scroll", () => {
 
     let currentSectionId = "";
 
-    // Find the current section based on scroll position
     navMenuSections.forEach(current => {
         const sectionHeight = current.offsetHeight;
         const sectionTop = current.offsetTop - 50;
@@ -276,12 +259,10 @@ window.addEventListener("scroll", () => {
         }
     });
 
-    // If scrolled to the bottom, the last section is active
     if ((window.innerHeight + scrollY) >= document.body.offsetHeight - 2) {
         currentSectionId = navMenuSections[navMenuSections.length - 1].getAttribute("id");
     }
 
-    // Remove 'current' from all links, then add it to the active one
     navLinks.forEach(link => link.classList.remove("current"));
 
     const activeLink = document.querySelector(`.bottom-nav .menu a[href="#${currentSectionId}"]`);
@@ -292,67 +273,77 @@ window.addEventListener("scroll", () => {
     }
 });
 
-// Hide bottom navigation menu on click menu-hide-btn.
 menuHideBtn.addEventListener("click", () => {
     bottomNav.classList.remove("active");
     menuHideBtn.classList.remove("active");
     menuShowBtn.classList.add("active");
 });
 
-// Show bottom navigation menu on click menu-show-btn.
 menuShowBtn.addEventListener("click", () => {
     bottomNav.classList.add("active");
     menuHideBtn.classList.add("active");
     menuShowBtn.classList.remove("active");
 });
 
+
+/* =====================================================
+   To-top-button with scroll indicator bar
+===================================================== */
+window.addEventListener("scroll", () => {
+   const toTopBtn = document.querySelector(".to-top-btn");
+
+   toTopBtn.classList.toggle("active", window.scrollY > 0);
+
+   // Scroll indicator bar
+   const scrollIndicatorBar = document.querySelector(".scroll-indicator-bar");
+   const pageScroll = document.body.scrollTop || document.documentElement.scrollTop;
+   const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+   const scrollValue = (pageScroll / height) * 100;
+   scrollIndicatorBar.style.height = scrollValue + "%";
+});
+
 /* =====================================================
    Customized cursor on mousemove
 ===================================================== */
 const cursor = document.querySelector(".cursor");
-const cursorDot = cursor.querySelector(".cursor-dot");
-const cursorCircle = cursor.querySelector(".cursor-circle");
+if (cursor) {
+    const cursorDot = cursor.querySelector(".cursor-dot");
+    const cursorCircle = cursor.querySelector(".cursor-circle");
 
-document.addEventListener("mousemove", (e) => {
-   let x = e.clientX;
-   let y = e.clientY;
+    document.addEventListener("mousemove", (e) => {
+       let x = e.clientX;
+       let y = e.clientY;
 
-   cursorDot.style.top = y + "px";
-   cursorDot.style.left = x + "px";
-   cursorCircle.style.top = y + "px";
-   cursorCircle.style.left = x + "px";
-});
+       cursorDot.style.top = y + "px";
+       cursorDot.style.left = x + "px";
+       cursorCircle.style.top = y + "px";
+       cursorCircle.style.left = x + "px";
+    });
 
-// Cursor effects on hover website elements.
-const cursorHoverlinks = document.querySelectorAll("body a, .theme-btn, .sue-main-btn, .keyprojects-card, .swiper-button-next, .swiper-button-prev, .swiper-pagination-bullet, .service-card, .contact-social-links li, .contact-form .submit-btn, .menu-show-btn, .menu-hide-btn");
+    const cursorHoverlinks = document.querySelectorAll("body a, .theme-btn, .sue-main-btn, .keyprojects-card, .swiper-button-next, .swiper-button-prev, .swiper-pagination-bullet, .service-card, .contact-social-links li, .contact-form .submit-btn, .menu-show-btn, .menu-hide-btn");
 
-cursorHoverlinks.forEach((cursorHoverlink) => {
-   cursorHoverlink.addEventListener("mouseover", () => {
-      cursorDot.classList.add("large");
-      cursorCircle.style.display = "none";
-   });
-});
+    cursorHoverlinks.forEach((cursorHoverlink) => {
+       cursorHoverlink.addEventListener("mouseover", () => {
+          cursorDot.classList.add("large");
+          cursorCircle.style.display = "none";
+       });
+       cursorHoverlink.addEventListener("mouseout", () => {
+          cursorDot.classList.remove("large");
+          cursorCircle.style.display = "block";
+       });
+    });
+}
 
-cursorHoverlinks.forEach((cursorHoverlink) => {
-   cursorHoverlink.addEventListener("mouseout", () => {
-      cursorDot.classList.remove("large");
-      cursorCircle.style.display = "block";
-   });
-});
 
 /* =====================================================
    Website dark/light theme
 ===================================================== */
-
-// Change theme and save current theme on click the theme button.
 const themeBtn = document.querySelector(".theme-btn");
 
 themeBtn.addEventListener("click", () => {
-   // Change theme icon and theme on click theme button.
    themeBtn.classList.toggle("active-sun-icon");
    document.body.classList.toggle("light-theme");
 
-   // Save theme icon and theme on click theme button.
    const getCurrentIcon = () => themeBtn.classList.contains("active-sun-icon") ? "sun" : "moon";
    const getCurrentTheme = () => document.body.classList.contains("light-theme") ? "light" : "dark";
 
@@ -360,28 +351,28 @@ themeBtn.addEventListener("click", () => {
    localStorage.setItem("sue-saved-theme", getCurrentTheme());
 });
 
-// Get saved theme icon and theme on document loaded.
 const savedIcon = localStorage.getItem("sue-saved-icon");
 const savedTheme = localStorage.getItem("sue-saved-theme");
 
 document.addEventListener("DOMContentLoaded", () => {
-   themeBtn.classList[savedIcon === "sun" ? "add" : "remove"]("active-sun-icon");
-   document.body.classList[savedTheme === "light" ? "add" : "remove"]("light-theme");
+    if (savedIcon) {
+        themeBtn.classList[savedIcon === "sun" ? "add" : "remove"]("active-sun-icon");
+    }
+    if (savedTheme) {
+        document.body.classList[savedTheme === "light" ? "add" : "remove"]("light-theme");
+    }
 });
+
 
 /* =====================================================
    ScrollReveal JS animations
 ===================================================== */
-
-// Common reveal options to create reveal animations.
 ScrollReveal({
-   // reset: true,
    distance: '60px',
    duration: 2500,
    delay: 400
 });
 
-// Target elements and specify options to create reveal animations.
 ScrollReveal().reveal('.avatar-img', { delay: 100, origin: 'top' });
 ScrollReveal().reveal('.avatar-info, .section-title', { delay: 300, origin: 'top' });
 ScrollReveal().reveal('.home-social, .home-scroll-btn, .copy-right', { delay: 600, origin: 'bottom' });
