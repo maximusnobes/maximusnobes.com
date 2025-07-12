@@ -231,59 +231,39 @@ window.addEventListener("scroll", () => {
     }
   });
 
-  // --- SPECIAL FIX FOR LAST SECTION ---
-  // Check if user has scrolled to the very bottom of the page
-  const atBottom = (window.innerHeight + window.scrollY) >= document.body.offsetHeight - 2; // -2 for a small buffer
-
-  if (atBottom) {
-    // If at the bottom, deactivate all links and only activate the last one
-    navLinks.forEach(link => link.classList.remove("current"));
-    const lastLink = document.querySelector(".bottom-nav .menu li:last-child a");
-    if (lastLink) {
-      lastLink.classList.add("current");
-    }
-  }
-});
-
-// Javascript to show bottom navigation menu on home(page load).
-window.addEventListener("DOMContentLoaded", () => {
-   const bottomNav = document.querySelector(".bottom-nav");
-
-   bottomNav.classList.toggle("active", window.scrollY < 10);
-});
-
-// Javascript to show/hide bottom navigation menu on home(scroll).
-const bottomNav = document.querySelector(".bottom-nav");
-const menuHideBtn = document.querySelector(".menu-hide-btn");
-const menuShowBtn = document.querySelector(".menu-show-btn");
-var navTimeout;
-
+ // Each bottom navigation menu items active on page scroll.
 window.addEventListener("scroll", () => {
-   bottomNav.classList.add("active");
-   menuShowBtn.classList.remove("active");
+    const navMenuSections = document.querySelectorAll(".nav-menu-section");
+    const navLinks = document.querySelectorAll(".bottom-nav .menu li a");
+    const scrollY = window.pageYOffset;
 
-   if(window.scrollY < 10){
-      menuHideBtn.classList.remove("active");
+    let currentSectionId = "";
 
-      function scrollStopped(){
-         bottomNav.classList.add("active");
-      }
+    // Find the current section based on scroll position
+    navMenuSections.forEach(current => {
+        const sectionHeight = current.offsetHeight;
+        const sectionTop = current.offsetTop - 50;
 
-      clearTimeout(navTimeout);
-      navTimeout = setTimeout(scrollStopped, 2500);
-   }
+        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+            currentSectionId = current.getAttribute("id");
+        }
+    });
 
-   if(window.scrollY > 10){
-      menuHideBtn.classList.add("active");
+    // If scrolled to the bottom, the last section is active
+    if ((window.innerHeight + scrollY) >= document.body.offsetHeight - 2) {
+        currentSectionId = navMenuSections[navMenuSections.length - 1].getAttribute("id");
+    }
 
-      function scrollStopped(){
-         bottomNav.classList.remove("active");
-         menuShowBtn.classList.add("active");
-      }
+    // Remove 'current' from all links, then add it to the active one
+    navLinks.forEach(link => link.classList.remove("current"));
 
-      clearTimeout(navTimeout);
-      navTimeout = setTimeout(scrollStopped, 2500);
-   }
+    const activeLink = document.querySelector(`.bottom-nav .menu a[href="#${currentSectionId}"]`);
+    if (activeLink) {
+        activeLink.classList.add("current");
+    } else if (scrollY < 50) {
+        // Default to home if at the top
+        document.querySelector(".bottom-nav .menu a[href='#home']").classList.add("current");
+    }
 });
 
 // Hide bottom navigation menu on click menu-hide-btn.
