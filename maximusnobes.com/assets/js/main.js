@@ -142,7 +142,10 @@ var swiper = new Swiper(".sue-client-swiper", {
    Send/Receive emails from contact form - EmailJS
 ===================================================== */
 (function() {
-   emailjs.init({ publicKey: "Dutvo2lKGBT0Q7wQr" });
+   // https://dashboard.emailjs.com/admin/account
+   emailjs.init({
+     publicKey: "Dutvo2lKGBT0Q7wQr",
+   });
 })();
 
 const maxContactForm = document.getElementById("max-contact-form");
@@ -151,17 +154,24 @@ const maxContactFormAlert = document.querySelector(".contact-form-alert");
 if (maxContactForm) {
     maxContactForm.addEventListener('submit', function(event) {
        event.preventDefault();
+       // these IDs from the previous steps
        emailjs.sendForm('service_x6gqeyr', 'template_xmtrqlg', '#max-contact-form')
            .then(() => {
+             //   console.log('SUCCESS!');
              maxContactFormAlert.innerHTML = "<span>Your message sent successfully!</span> <i class='ri-checkbox-circle-fill'></i>";
              maxContactForm.reset();
-             setTimeout(() => { maxContactFormAlert.innerHTML = ""; }, 5000);
+    
+             setTimeout(() => {
+                maxContactFormAlert.innerHTML = "";
+             }, 5000);
            }, (error) => {
+             //   console.log('FAILED...', error);
              maxContactFormAlert.innerHTML = "<span>Message not sent</span> <i class='ri-error-warning-fill'></i>";
              maxContactFormAlert.title = error;
            });
     });
 }
+
 
 /* =====================================================
    SCROLL EVENT LISTENER (Consolidated)
@@ -176,65 +186,64 @@ window.addEventListener("scroll", () => {
 
     // --- 1. Header shrink logic ---
     const sueHeader = document.querySelector(".sue-header");
-    sueHeader.classList.toggle("shrink", scrollY > 0);
+    if(sueHeader) sueHeader.classList.toggle("shrink", scrollY > 0);
 
     // --- 2. To-top-button and scroll indicator logic ---
     const toTopBtn = document.querySelector(".to-top-btn");
     if (toTopBtn) {
         toTopBtn.classList.toggle("active", scrollY > 0);
-        const scrollIndicatorBar = document.querySelector(".scroll-indicator-bar");
-        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-        const scrollValue = (scrollY / height) * 100;
-        scrollIndicatorBar.style.height = scrollValue + "%";
+        const scrollIndicatorBar = toTopBtn.querySelector(".scroll-indicator-bar");
+        if(scrollIndicatorBar){
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollValue = (height > 0) ? (scrollY / height) * 100 : 0;
+            scrollIndicatorBar.style.height = scrollValue + "%";
+        }
     }
 
     // --- 3. Bottom navigation menu logic ---
     if (bottomNav) {
         // Visibility Logic
         bottomNav.classList.add("active");
-        menuShowBtn.classList.remove("active");
+        if(menuShowBtn) menuShowBtn.classList.remove("active");
 
         if (scrollY < 10) {
-            menuHideBtn.classList.remove("active");
+            if(menuHideBtn) menuHideBtn.classList.remove("active");
         } else {
-            menuHideBtn.classList.add("active");
+            if(menuHideBtn) menuHideBtn.classList.add("active");
         }
 
-        function scrollStopped() {
+        const scrollStopped = () => {
             if (scrollY > 10) {
                 bottomNav.classList.remove("active");
-                menuShowBtn.classList.add("active");
+                if (menuShowBtn) menuShowBtn.classList.add("active");
             }
-        }
+        };
         clearTimeout(navTimeout);
         navTimeout = setTimeout(scrollStopped, 2500);
 
-        // Highlighting Logic
+        // Highlighting Logic (NEW REVERSE LOOP METHOD)
         const navMenuSections = document.querySelectorAll(".nav-menu-section");
         const navLinks = document.querySelectorAll(".bottom-nav .menu li a");
-        let currentSectionId = "";
+        let currentSectionId = "home"; // Default to 'home'
 
-        navMenuSections.forEach(current => {
-            const sectionHeight = current.offsetHeight;
-            const sectionTop = current.offsetTop - 50;
-            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+        // Iterate backwards from the last section to the first
+        for (let i = navMenuSections.length - 1; i >= 0; i--) {
+            const current = navMenuSections[i];
+            const sectionTop = current.offsetTop - 60; // 60px offset to trigger highlight sooner
+
+            if (scrollY >= sectionTop) {
                 currentSectionId = current.getAttribute("id");
+                break; // Exit loop once the current section is found
+            }
+        }
+        
+        // Update the 'current' class on the navigation links
+        navLinks.forEach(link => {
+            link.classList.remove("current");
+            if (link.getAttribute('href') === `#${currentSectionId}`) {
+                link.classList.add("current");
             }
         });
-
-        if ((window.innerHeight + scrollY) >= document.body.offsetHeight - 2) {
-            currentSectionId = navMenuSections[navMenuSections.length - 1].getAttribute("id");
-        }
-
-        navLinks.forEach(link => link.classList.remove("current"));
-        const activeLink = document.querySelector(`.bottom-nav .menu a[href="#${currentSectionId}"]`);
-        
-        if (activeLink) {
-            activeLink.classList.add("current");
-        } else if (scrollY < 50) {
-            const homeLink = document.querySelector(".bottom-nav .menu a[href='#home']");
-            if (homeLink) homeLink.classList.add("current");
-        }
     }
 });
 
@@ -243,99 +252,4 @@ window.addEventListener("scroll", () => {
    Bottom Nav Buttons & Initial State
 ===================================================== */
 window.addEventListener("DOMContentLoaded", () => {
-   if (window.scrollY < 10 && bottomNav) {
-      bottomNav.classList.add("active");
-   }
-});
-
-if (menuHideBtn) {
-    menuHideBtn.addEventListener("click", () => {
-        bottomNav.classList.remove("active");
-        menuHideBtn.classList.remove("active");
-        menuShowBtn.classList.add("active");
-    });
-}
-
-if (menuShowBtn) {
-    menuShowBtn.addEventListener("click", () => {
-        bottomNav.classList.add("active");
-        menuHideBtn.classList.add("active");
-        menuShowBtn.classList.remove("active");
-    });
-}
-
-/* =====================================================
-   Customized cursor on mousemove
-===================================================== */
-const cursor = document.querySelector(".cursor");
-if (cursor) {
-    const cursorDot = cursor.querySelector(".cursor-dot");
-    const cursorCircle = cursor.querySelector(".cursor-circle");
-    document.addEventListener("mousemove", (e) => {
-       let x = e.clientX;
-       let y = e.clientY;
-       cursorDot.style.top = y + "px";
-       cursorDot.style.left = x + "px";
-       cursorCircle.style.top = y + "px";
-       cursorCircle.style.left = x + "px";
-    });
-
-    const cursorHoverlinks = document.querySelectorAll("body a, .theme-btn, .sue-main-btn, .keyprojects-card, .swiper-button-next, .swiper-button-prev, .swiper-pagination-bullet, .service-card, .contact-social-links li, .contact-form .submit-btn, .menu-show-btn, .menu-hide-btn");
-    cursorHoverlinks.forEach((cursorHoverlink) => {
-       cursorHoverlink.addEventListener("mouseover", () => {
-          cursorDot.classList.add("large");
-          cursorCircle.style.display = "none";
-       });
-       cursorHoverlink.addEventListener("mouseout", () => {
-          cursorDot.classList.remove("large");
-          cursorCircle.style.display = "block";
-       });
-    });
-}
-
-/* =====================================================
-   Website dark/light theme
-===================================================== */
-const themeBtn = document.querySelector(".theme-btn");
-if (themeBtn) {
-    themeBtn.addEventListener("click", () => {
-       themeBtn.classList.toggle("active-sun-icon");
-       document.body.classList.toggle("light-theme");
-       const getCurrentIcon = () => themeBtn.classList.contains("active-sun-icon") ? "sun" : "moon";
-       const getCurrentTheme = () => document.body.classList.contains("light-theme") ? "light" : "dark";
-       localStorage.setItem("sue-saved-icon", getCurrentIcon());
-       localStorage.setItem("sue-saved-theme", getCurrentTheme());
-    });
-
-    const savedIcon = localStorage.getItem("sue-saved-icon");
-    const savedTheme = localStorage.getItem("sue-saved-theme");
-
-    document.addEventListener("DOMContentLoaded", () => {
-        if (savedIcon) {
-            themeBtn.classList[savedIcon === "sun" ? "add" : "remove"]("active-sun-icon");
-        }
-        if (savedTheme) {
-            document.body.classList[savedTheme === "light" ? "add" : "remove"]("light-theme");
-        }
-    });
-}
-
-/* =====================================================
-   ScrollReveal JS animations
-===================================================== */
-ScrollReveal({
-   distance: '60px',
-   duration: 2500,
-   delay: 400
-});
-
-ScrollReveal().reveal('.avatar-img', { delay: 100, origin: 'top' });
-ScrollReveal().reveal('.avatar-info, .section-title', { delay: 300, origin: 'top' });
-ScrollReveal().reveal('.home-social, .home-scroll-btn, .copy-right', { delay: 600, origin: 'bottom' });
-ScrollReveal().reveal('.about-img', { delay: 700, origin: 'top' });
-ScrollReveal().reveal('.about-info, .sue-footer .sue-logo', { delay: 300, origin: 'bottom' });
-ScrollReveal().reveal('.pro-card, .about-buttons .sue-main-btn, .resume-tabs .tab-btn, .keyprojects-tabs .tab-btn', { delay: 500, origin: 'right', interval: 200 });
-ScrollReveal().reveal('#resume .section-content', { delay: 700, origin: 'bottom' });
-ScrollReveal().reveal('.service-card, .keyprojects-card, .contact-item, .contact-social-links li, .footer-menu .menu-item', { delay: 300, origin: 'bottom', interval: 300 });
-ScrollReveal().reveal('.sue-client-swiper, .contact-form-body', { delay: 700, origin: 'right' });
-ScrollReveal().reveal('.contact-info h3', { delay: 100, origin: 'bottom', interval: 300 });
+   if (window.scrollY < 10 &&
