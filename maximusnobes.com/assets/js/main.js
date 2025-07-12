@@ -2,33 +2,36 @@
    Resume section tabs and tab contents
 ===================================================== */
 const resumeTabs = document.querySelector(".resume-tabs");
-const resumekeyprojectsTabBtns = resumeTabs.querySelectorAll(".tab-btn");
-const resumeTabContents = document.querySelectorAll(".resume-tab-content");
+if (resumeTabs) {
+    const resumekeyprojectsTabBtns = resumeTabs.querySelectorAll(".tab-btn");
+    const resumeTabContents = document.querySelectorAll(".resume-tab-content");
 
-var resumeTabNav = function(resumeTabClick){
-   resumeTabContents.forEach((resumeTabContent) => {
-      resumeTabContent.style.display = "none";
-      resumeTabContent.classList.remove("active");
-   });
+    var resumeTabNav = function(resumeTabClick){
+       resumeTabContents.forEach((resumeTabContent) => {
+          resumeTabContent.style.display = "none";
+          resumeTabContent.classList.remove("active");
+       });
 
-   resumekeyprojectsTabBtns.forEach((resumekeyprojectsTabBtn) => {
-      resumekeyprojectsTabBtn.classList.remove("active");
-   });
+       resumekeyprojectsTabBtns.forEach((resumekeyprojectsTabBtn) => {
+          resumekeyprojectsTabBtn.classList.remove("active");
+       });
 
-   resumeTabContents[resumeTabClick].style.display = "flex";
+       resumeTabContents[resumeTabClick].style.display = "flex";
 
-   setTimeout(() => {
-      resumeTabContents[resumeTabClick].classList.add("active");
-   }, 100);
+       setTimeout(() => {
+          resumeTabContents[resumeTabClick].classList.add("active");
+       }, 100);
 
-   resumekeyprojectsTabBtns[resumeTabClick].classList.add("active");
+       resumekeyprojectsTabBtns[resumeTabClick].classList.add("active");
+    }
+
+    resumekeyprojectsTabBtns.forEach((resumekeyprojectsTabBtn, i) => {
+       resumekeyprojectsTabBtn.addEventListener("click", () => {
+          resumeTabNav(i);
+       });
+    });
 }
 
-resumekeyprojectsTabBtns.forEach((resumekeyprojectsTabBtn, i) => {
-   resumekeyprojectsTabBtn.addEventListener("click", () => {
-      resumeTabNav(i);
-   });
-});
 
 /* =====================================================
    Service modal open/close function
@@ -43,21 +46,12 @@ serviceCardWithModals.forEach((serviceCardWithModal) => {
 
    serviceCard.addEventListener("click", () => {
       serviceBackDrop.style.display = "flex";
-
-      setTimeout(() => {
-         serviceBackDrop.classList.add("active");
-      }, 100);
-
-      setTimeout(() => {
-         serviceModal.classList.add("active");
-      }, 300);
+      setTimeout(() => { serviceBackDrop.classList.add("active"); }, 100);
+      setTimeout(() => { serviceModal.classList.add("active"); }, 300);
    });
 
    modalCloseBtn.addEventListener("click", () => {
-      setTimeout(() => {
-         serviceBackDrop.style.display = "none";
-      }, 500);
-
+      setTimeout(() => { serviceBackDrop.style.display = "none"; }, 500);
       setTimeout(() => {
          serviceBackDrop.classList.remove("active");
          serviceModal.classList.remove("active");
@@ -68,45 +62,37 @@ serviceCardWithModals.forEach((serviceCardWithModal) => {
 /* =====================================================
    Key Projects modals, tabs and cards
 ===================================================== */
-
-// Filter Key Project cards according to Key Projects tabs.
 document.addEventListener("DOMContentLoaded", () => {
    const keyprojectsTabs = document.querySelector(".keyprojects-tabs");
+   if (!keyprojectsTabs) return;
    const keyprojectsTabBtns = keyprojectsTabs.querySelectorAll(".tab-btn");
    const cardsWithModals = document.querySelectorAll(".keyprojects-container .card-with-modal");
 
    keyprojectsTabBtns.forEach((tabBtn) => {
       tabBtn.addEventListener("click", () => {
          const filter = tabBtn.getAttribute("data-filter");
-
          cardsWithModals.forEach((cardWithModal) => {
             if(filter === "all" || cardWithModal.classList.contains(filter)){
                cardWithModal.classList.remove("hidden");
-
                setTimeout(() => {
                   cardWithModal.style.opacity = "1";
                   cardWithModal.style.transition = ".5s ease";
                }, 1);
-            }
-            else{
+            } else {
                cardWithModal.classList.add("hidden");
-
                setTimeout(() => {
                   cardWithModal.style.opacity = "0";
                   cardWithModal.style.transition = ".5s ease";
                }, 1);
             }
          });
-         // Add active class to the clicked tab button.
-         keyprojectsTabBtns.forEach((tabBtn) => tabBtn.classList.remove("active"));
+         keyprojectsTabBtns.forEach((btn) => btn.classList.remove("active"));
          tabBtn.classList.add("active");
       });
    });
 });
 
-// Open/Close Key Projects modals.
 const keyprojectsCardsWithModals = document.querySelectorAll(".keyprojects-container .card-with-modal");
-
 keyprojectsCardsWithModals.forEach((keyprojectsCardWithModal) => {
    const keyprojectsCard = keyprojectsCardWithModal.querySelector(".keyprojects-card");
    const keyprojectsBackdrop = keyprojectsCardWithModal.querySelector(".keyprojects-modal-backdrop");
@@ -114,35 +100,21 @@ keyprojectsCardsWithModals.forEach((keyprojectsCardWithModal) => {
    const modalCloseBtn = keyprojectsCardWithModal.querySelector(".modal-close-btn");
 
    const closeModal = () => {
-      // Remove the active classes to trigger the fade-out animation
       keyprojectsBackdrop.classList.remove("active");
       keyprojectsModal.classList.remove("active");
-
-      // Wait for the animation to finish before hiding the element completely
-      setTimeout(() => {
-         keyprojectsBackdrop.style.display = "none";
-      }, 500); // This duration should match your CSS transition time
+      setTimeout(() => { keyprojectsBackdrop.style.display = "none"; }, 500);
    }
 
-   // --- OPEN MODAL ---
    keyprojectsCard.addEventListener("click", () => {
-      // Make the backdrop element visible in the layout
       keyprojectsBackdrop.style.display = "flex";
-
-      // Use a short timeout to allow the display property to apply before adding the transition class
       setTimeout(() => {
          keyprojectsBackdrop.classList.add("active");
          keyprojectsModal.classList.add("active");
       }, 20);
    });
 
-   // --- CLOSE MODAL (Event Listeners) ---
-   // Listen for a click on the 'X' button
    modalCloseBtn.addEventListener("click", closeModal);
-
-   // ADDED THIS: Listen for a click on the background
    keyprojectsBackdrop.addEventListener("click", (event) => {
-      // Only close if the click is on the backdrop itself, not on the modal window
       if (event.target === keyprojectsBackdrop) {
          closeModal();
       }
@@ -170,10 +142,7 @@ var swiper = new Swiper(".sue-client-swiper", {
    Send/Receive emails from contact form - EmailJS
 ===================================================== */
 (function() {
-   // https://dashboard.emailjs.com/admin/account
-   emailjs.init({
-     publicKey: "Dutvo2lKGBT0Q7wQr",
-   });
+   emailjs.init({ publicKey: "Dutvo2lKGBT0Q7wQr" });
 })();
 
 const maxContactForm = document.getElementById("max-contact-form");
@@ -182,125 +151,118 @@ const maxContactFormAlert = document.querySelector(".contact-form-alert");
 if (maxContactForm) {
     maxContactForm.addEventListener('submit', function(event) {
        event.preventDefault();
-       // these IDs from the previous steps
        emailjs.sendForm('service_x6gqeyr', 'template_xmtrqlg', '#max-contact-form')
            .then(() => {
-             //   console.log('SUCCESS!');
              maxContactFormAlert.innerHTML = "<span>Your message sent successfully!</span> <i class='ri-checkbox-circle-fill'></i>";
              maxContactForm.reset();
-    
-             setTimeout(() => {
-                maxContactFormAlert.innerHTML = "";
-             }, 5000);
+             setTimeout(() => { maxContactFormAlert.innerHTML = ""; }, 5000);
            }, (error) => {
-             //   console.log('FAILED...', error);
              maxContactFormAlert.innerHTML = "<span>Message not sent</span> <i class='ri-error-warning-fill'></i>";
              maxContactFormAlert.title = error;
            });
     });
 }
 
-
 /* =====================================================
-   Shrink the height of the header on scroll
-===================================================== */
-window.addEventListener("scroll", () => {
-   const sueHeader = document.querySelector(".sue-header");
-   sueHeader.classList.toggle("shrink", window.scrollY > 0);
-});
-
-/* =====================================================
-   Bottom navigation menu
+   SCROLL EVENT LISTENER (Consolidated)
 ===================================================== */
 const bottomNav = document.querySelector(".bottom-nav");
 const menuHideBtn = document.querySelector(".menu-hide-btn");
 const menuShowBtn = document.querySelector(".menu-show-btn");
 var navTimeout;
 
-// Javascript to show bottom navigation menu on home(page load).
-window.addEventListener("DOMContentLoaded", () => {
-    if (window.scrollY < 10) {
-        bottomNav.classList.add("active");
-    }
-});
-
 window.addEventListener("scroll", () => {
-    // --- Visibility Logic (Shows/Hides the menu bar) ---
-    bottomNav.classList.add("active");
-    menuShowBtn.classList.remove("active");
-
-    if (window.scrollY < 10) {
-        menuHideBtn.classList.remove("active");
-    } else {
-        menuHideBtn.classList.add("active");
-    }
-
-    function scrollStopped() {
-        if (window.scrollY > 10) {
-            bottomNav.classList.remove("active");
-            menuShowBtn.classList.add("active");
-        }
-    }
-    clearTimeout(navTimeout);
-    navTimeout = setTimeout(scrollStopped, 2500);
-
-    // --- Highlighting Logic (Adds 'current' class to the correct link) ---
-    const navMenuSections = document.querySelectorAll(".nav-menu-section");
-    const navLinks = document.querySelectorAll(".bottom-nav .menu li a");
     const scrollY = window.pageYOffset;
 
-    let currentSectionId = "";
+    // --- 1. Header shrink logic ---
+    const sueHeader = document.querySelector(".sue-header");
+    sueHeader.classList.toggle("shrink", scrollY > 0);
 
-    navMenuSections.forEach(current => {
-        const sectionHeight = current.offsetHeight;
-        const sectionTop = current.offsetTop - 50;
-        if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
-            currentSectionId = current.getAttribute("id");
+    // --- 2. To-top-button and scroll indicator logic ---
+    const toTopBtn = document.querySelector(".to-top-btn");
+    if (toTopBtn) {
+        toTopBtn.classList.toggle("active", scrollY > 0);
+        const scrollIndicatorBar = document.querySelector(".scroll-indicator-bar");
+        const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+        const scrollValue = (scrollY / height) * 100;
+        scrollIndicatorBar.style.height = scrollValue + "%";
+    }
+
+    // --- 3. Bottom navigation menu logic ---
+    if (bottomNav) {
+        // Visibility Logic
+        bottomNav.classList.add("active");
+        menuShowBtn.classList.remove("active");
+
+        if (scrollY < 10) {
+            menuHideBtn.classList.remove("active");
+        } else {
+            menuHideBtn.classList.add("active");
         }
-    });
 
-    if ((window.innerHeight + scrollY) >= document.body.offsetHeight - 2) {
-        currentSectionId = navMenuSections[navMenuSections.length - 1].getAttribute("id");
+        function scrollStopped() {
+            if (scrollY > 10) {
+                bottomNav.classList.remove("active");
+                menuShowBtn.classList.add("active");
+            }
+        }
+        clearTimeout(navTimeout);
+        navTimeout = setTimeout(scrollStopped, 2500);
+
+        // Highlighting Logic
+        const navMenuSections = document.querySelectorAll(".nav-menu-section");
+        const navLinks = document.querySelectorAll(".bottom-nav .menu li a");
+        let currentSectionId = "";
+
+        navMenuSections.forEach(current => {
+            const sectionHeight = current.offsetHeight;
+            const sectionTop = current.offsetTop - 50;
+            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                currentSectionId = current.getAttribute("id");
+            }
+        });
+
+        if ((window.innerHeight + scrollY) >= document.body.offsetHeight - 2) {
+            currentSectionId = navMenuSections[navMenuSections.length - 1].getAttribute("id");
+        }
+
+        navLinks.forEach(link => link.classList.remove("current"));
+        const activeLink = document.querySelector(`.bottom-nav .menu a[href="#${currentSectionId}"]`);
+        
+        if (activeLink) {
+            activeLink.classList.add("current");
+        } else if (scrollY < 50) {
+            const homeLink = document.querySelector(".bottom-nav .menu a[href='#home']");
+            if (homeLink) homeLink.classList.add("current");
+        }
     }
-
-    navLinks.forEach(link => link.classList.remove("current"));
-
-    const activeLink = document.querySelector(`.bottom-nav .menu a[href="#${currentSectionId}"]`);
-    if (activeLink) {
-        activeLink.classList.add("current");
-    } else if (scrollY < 50) {
-        document.querySelector(".bottom-nav .menu a[href='#home']").classList.add("current");
-    }
-});
-
-menuHideBtn.addEventListener("click", () => {
-    bottomNav.classList.remove("active");
-    menuHideBtn.classList.remove("active");
-    menuShowBtn.classList.add("active");
-});
-
-menuShowBtn.addEventListener("click", () => {
-    bottomNav.classList.add("active");
-    menuHideBtn.classList.add("active");
-    menuShowBtn.classList.remove("active");
 });
 
 
 /* =====================================================
-   To-top-button with scroll indicator bar
+   Bottom Nav Buttons & Initial State
 ===================================================== */
-window.addEventListener("scroll", () => {
-   const toTopBtn = document.querySelector(".to-top-btn");
-
-   toTopBtn.classList.toggle("active", window.scrollY > 0);
-
-   // Scroll indicator bar
-   const scrollIndicatorBar = document.querySelector(".scroll-indicator-bar");
-   const pageScroll = document.body.scrollTop || document.documentElement.scrollTop;
-   const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
-   const scrollValue = (pageScroll / height) * 100;
-   scrollIndicatorBar.style.height = scrollValue + "%";
+window.addEventListener("DOMContentLoaded", () => {
+   if (window.scrollY < 10 && bottomNav) {
+      bottomNav.classList.add("active");
+   }
 });
+
+if (menuHideBtn) {
+    menuHideBtn.addEventListener("click", () => {
+        bottomNav.classList.remove("active");
+        menuHideBtn.classList.remove("active");
+        menuShowBtn.classList.add("active");
+    });
+}
+
+if (menuShowBtn) {
+    menuShowBtn.addEventListener("click", () => {
+        bottomNav.classList.add("active");
+        menuHideBtn.classList.add("active");
+        menuShowBtn.classList.remove("active");
+    });
+}
 
 /* =====================================================
    Customized cursor on mousemove
@@ -309,11 +271,9 @@ const cursor = document.querySelector(".cursor");
 if (cursor) {
     const cursorDot = cursor.querySelector(".cursor-dot");
     const cursorCircle = cursor.querySelector(".cursor-circle");
-
     document.addEventListener("mousemove", (e) => {
        let x = e.clientX;
        let y = e.clientY;
-
        cursorDot.style.top = y + "px";
        cursorDot.style.left = x + "px";
        cursorCircle.style.top = y + "px";
@@ -321,7 +281,6 @@ if (cursor) {
     });
 
     const cursorHoverlinks = document.querySelectorAll("body a, .theme-btn, .sue-main-btn, .keyprojects-card, .swiper-button-next, .swiper-button-prev, .swiper-pagination-bullet, .service-card, .contact-social-links li, .contact-form .submit-btn, .menu-show-btn, .menu-hide-btn");
-
     cursorHoverlinks.forEach((cursorHoverlink) => {
        cursorHoverlink.addEventListener("mouseover", () => {
           cursorDot.classList.add("large");
@@ -334,35 +293,32 @@ if (cursor) {
     });
 }
 
-
 /* =====================================================
    Website dark/light theme
 ===================================================== */
 const themeBtn = document.querySelector(".theme-btn");
+if (themeBtn) {
+    themeBtn.addEventListener("click", () => {
+       themeBtn.classList.toggle("active-sun-icon");
+       document.body.classList.toggle("light-theme");
+       const getCurrentIcon = () => themeBtn.classList.contains("active-sun-icon") ? "sun" : "moon";
+       const getCurrentTheme = () => document.body.classList.contains("light-theme") ? "light" : "dark";
+       localStorage.setItem("sue-saved-icon", getCurrentIcon());
+       localStorage.setItem("sue-saved-theme", getCurrentTheme());
+    });
 
-themeBtn.addEventListener("click", () => {
-   themeBtn.classList.toggle("active-sun-icon");
-   document.body.classList.toggle("light-theme");
+    const savedIcon = localStorage.getItem("sue-saved-icon");
+    const savedTheme = localStorage.getItem("sue-saved-theme");
 
-   const getCurrentIcon = () => themeBtn.classList.contains("active-sun-icon") ? "sun" : "moon";
-   const getCurrentTheme = () => document.body.classList.contains("light-theme") ? "light" : "dark";
-
-   localStorage.setItem("sue-saved-icon", getCurrentIcon());
-   localStorage.setItem("sue-saved-theme", getCurrentTheme());
-});
-
-const savedIcon = localStorage.getItem("sue-saved-icon");
-const savedTheme = localStorage.getItem("sue-saved-theme");
-
-document.addEventListener("DOMContentLoaded", () => {
-    if (savedIcon) {
-        themeBtn.classList[savedIcon === "sun" ? "add" : "remove"]("active-sun-icon");
-    }
-    if (savedTheme) {
-        document.body.classList[savedTheme === "light" ? "add" : "remove"]("light-theme");
-    }
-});
-
+    document.addEventListener("DOMContentLoaded", () => {
+        if (savedIcon) {
+            themeBtn.classList[savedIcon === "sun" ? "add" : "remove"]("active-sun-icon");
+        }
+        if (savedTheme) {
+            document.body.classList[savedTheme === "light" ? "add" : "remove"]("light-theme");
+        }
+    });
+}
 
 /* =====================================================
    ScrollReveal JS animations
