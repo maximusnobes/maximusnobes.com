@@ -206,44 +206,35 @@ window.addEventListener("scroll", () => {
     // --- 3. Bottom navigation menu logic ---
     if (bottomNav) {
         // Visibility Logic
-        bottomNav.classList.add("active");
-        if(menuShowBtn) menuShowBtn.classList.remove("active");
-
-        if (scrollY < 10) {
-            if(menuHideBtn) menuHideBtn.classList.remove("active");
-        } else {
+        if (scrollY > 10) {
             if(menuHideBtn) menuHideBtn.classList.add("active");
-        }
-
-        const scrollStopped = () => {
-            if (scrollY > 10) {
+            clearTimeout(navTimeout);
+            navTimeout = setTimeout(() => {
                 bottomNav.classList.remove("active");
                 if (menuShowBtn) menuShowBtn.classList.add("active");
-            }
-        };
-        clearTimeout(navTimeout);
-        navTimeout = setTimeout(scrollStopped, 2500);
-
-        // Highlighting Logic (NEW REVERSE LOOP METHOD)
-        const navMenuSections = document.querySelectorAll(".nav-menu-section");
-        const navLinks = document.querySelectorAll(".bottom-nav .menu li a");
-        let currentSectionId = "home"; // Default to 'home'
-
-        // Iterate backwards from the last section to the first
-        for (let i = navMenuSections.length - 1; i >= 0; i--) {
-            const current = navMenuSections[i];
-            const sectionTop = current.offsetTop - 60; // 60px offset to trigger highlight sooner
-
-            if (scrollY >= sectionTop) {
-                currentSectionId = current.getAttribute("id");
-                break; // Exit loop once the current section is found
-            }
+            }, 2500);
+        } else {
+            bottomNav.classList.add("active");
+            if(menuHideBtn) menuHideBtn.classList.remove("active");
+            if(menuShowBtn) menuShowBtn.classList.remove("active");
         }
         
-        // Update the 'current' class on the navigation links
+        // Highlighting Logic
+        const navMenuSections = document.querySelectorAll(".nav-menu-section");
+        const navLinks = document.querySelectorAll(".bottom-nav .menu li a");
+        let currentSectionId = "";
+        
+        navMenuSections.forEach(section => {
+            const sectionTop = section.offsetTop - 70; // 70px offset
+            const sectionHeight = section.offsetHeight;
+            if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
+                currentSectionId = section.getAttribute('id');
+            }
+        });
+        
         navLinks.forEach(link => {
             link.classList.remove("current");
-            if (link.getAttribute('href') === `#${currentSectionId}`) {
+            if (link.getAttribute("href") === "#" + currentSectionId) {
                 link.classList.add("current");
             }
         });
