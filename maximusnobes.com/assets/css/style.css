@@ -1029,7 +1029,7 @@ body{
 .experience .resume-line{
    background: var(--primary-color);
    width: 2px;
-   height: 150px;
+   height: 255px;
 }
 
 .community-involvement .resume-line{
