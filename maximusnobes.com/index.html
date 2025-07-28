@@ -664,7 +664,7 @@
                       <img src="assets/images/portfolio images/ai_agent_generator.jpeg" alt="">
                     </div>
                     <h4 class="modal-title">AI Agent Generator</h4>
-                    <p class="description">descriptionhere.</p>
+                    <p class="description">This project is a sophisticated, persona-driven prompt engineered to transform a Large Language Model (LLM) into "Morpheus," an AI specialist whose purpose is to help users design and create other AI agents. Morpheus functions as a master architect and guide, taking a user's initial concept for a new AI and leading them through a structured and rigorous conceptualization process. The persona is deliberately chosen to create a collaborative and Socratic dialogue, helping the user to build and refine their ideas with clarity and precision. <br> <br> The prompt outlines a multi-stage methodology that Morpheus follows. It initiates a critical review of the user's proposal, questioning its core premise, feasibility, and justification to ensure the concept is sound. Through this structured interaction, Morpheus helps the user define the new agent's purpose, core principles, and operational framework. The final output of this collaborative process is a complete, well-designed system prompt or "constitution" for the new AI agent. This project showcases a meta-level application of prompt engineering, using one AI to facilitate the thoughtful creation of another.</p>
                   </div>
                 </div>
               </div>
@@ -690,7 +690,7 @@
                       <img src="assets/images/portfolio images/LLM_constitution.jpeg" alt="">
                     </div>
                     <h4 class="modal-title">LLM Constitution</h4>
-                    <p class="description">descriptionhere.</p>
+                    <p class="description">This project showcases a custom-designed "constitution" for a Large Language Model (LLM), a technique used in modern AI development for safety, alignment, and behavioral guidance. An LLM constitution provides the AI with a core set of rules and principles that it must adhere to when generating responses. This method allows for more nuanced control over the model's behavior, steering it to be more helpful, harmless, and aligned with a specific operational framework without needing to retrain the entire model. <br> <br> This particular constitution is specifically engineered to guide an LLM in executing complex, multi-step tasks. It establishes "Goal-Oriented, Process-Deconstructing Core Principles" and instructions for "Agent-Adjacent...Processing and Reasoning," which enable the AI to break down large, ambiguous problems into smaller, logical, and actionable steps. This work demonstrates an advanced understanding of prompt engineering and AI control, showing how to structure an AI's "thought process" for sophisticated problem-solving applications beyond simple Q&A.</p>
                   </div>
                 </div>
               </div>
@@ -716,7 +716,7 @@
                       <img src="assets/images/portfolio images/westernfront_dashboard.png" alt="">
                     </div>
                     <h4 class="modal-title">WesternFront: District Identification</h4>
-                    <p class="description">descriptionhere.</p>
+                    <p class="description">This project is an interactive Tableau dashboard developed for strategic political analysis, designed to identify Republican-held congressional districts with the potential to become competitive in the 2026 midterm elections. The dashboard visualizes a comprehensive dataset aggregated from multiple public sources, including the U.S. Census Bureau and the Federal Election Commission. This data is collected and maintained using the previously showcased n8n automation workflows, demonstrating an end-to-end data pipeline from automated gathering to final analysis. <br> <br> The dashboard features four interconnected components: a breakdown of campaign spending by party, a geographical map of party performance, a time-series analysis of GOP voting trends since 2016, and a matrix plotting race competitiveness against financial investment. Using interactive filters, analysts can drill down into specific districts to spot trends, such as declining Republican vote share over time, and cross-reference this with spending data. This allows the user to move beyond surface-level numbers to make data-driven decisions about where resources could be most effective in future election cycles.</p>
                   </div>
                 </div>
               </div>
@@ -742,7 +742,7 @@
                       <img src="assets/images/portfolio images/room_to_read_dashboard.png" alt="">
                     </div>
                     <h4 class="modal-title">Room to Read: Scalable Impact</h4>
-                    <p class="description">descriptionhere.</p>
+                    <p class="description">This Tableau dashboard offers a comprehensive analysis of the non-governmental organization (NGO) "Room to Read," examining its performance and scalable impact between 2020 and 2023. The objective of this project was to translate data from public records into a clear, visual narrative of the organization's growth and operational efficiency. The entire analysis is based on data sourced directly from Room to Read's publicly available annual reports, showcasing the ability to interpret and visualize real-world disclosures. <br> <br> The dashboard presents a multi-faceted view of the organization's success through several interconnected visualizations. It tracks key metrics such as the expanding global footprint, diversification of funding sources, and trends in programmatic expenses versus the number of children reached. Core performance indicators like "Cost Per Child" and "Annual vs Cumulative Reach" are prominently displayed to quantify the NGO's impact and efficiency over the four-year period. This synthesis of data provides clear insights into how Room to Read has successfully scaled its global operations while maintaining fiscal prudence.</p>
                   </div>
                 </div>
               </div>
@@ -768,7 +768,7 @@
                       <img src="assets/images/portfolio images/polling_one_pager.jpeg" alt="">
                     </div>
                     <h4 class="modal-title">Polling One-Pager</h4>
-                    <p class="description">I developed a sophisticated workflow that transforms dense, multi-page polling survey PDFs into concise, client-ready one-page summaries.  The system uses a two-agent AI process to first identify relevant data and then extract specific data points, automatically populating them into a formatted template. This automation reduces a process that previously took up to an hour of manual work to under five minutes, ensuring speed and accuracy in delivering critical insights to campaign teams and clients.</p>
+                    <p class="description">This workflow is designed to automate the collection of political demographic data. The process starts when a user submits a political district's name through a chat interface. The automation then employs Puppeteer to launch and control a web browser, which navigates to the Political Data Inc. (PDI) website to scrape three separate voter data reports. This automated Browse functionality eliminates the need for repetitive, manual navigation and data searching, which is a primary source of time savings. <br> <br> To handle the scraped information, the workflow integrates a Google Gemini AI model. The raw, unstructured text from the website is sent to the AI, which then reads and extracts dozens of specific data points, such as voter totals, party affiliation, and age demographics. Using an AI for this step is more robust than relying on custom-written code that can break with website changes. The final, structured data is then seamlessly added as a new row to a Google Sheet, ensuring an accurate, up-to-date dataset without manual entry.</p>
                   </div>
                 </div>
               </div>
@@ -819,8 +819,8 @@
                     <div class="modal-img">
                       <img src="assets/images/portfolio images/fec_api_excel_intergration.jpeg" alt="">
                     </div>
-                    <h4 class="modal-title">EC API + Excel Intergration</h4>
-                    <p class="description">descriptionhere</p>
+                    <h4 class="modal-title">FEC API + Excel Intergration</h4>
+                    <p class="description">This automation is built to streamline the collection of campaign finance data directly from the Federal Election Commission (FEC). The process is initiated manually and starts by reading two data sources from Google Sheets: one containing a list of target political districts and another with a master list of candidates and their corresponding FEC IDs. The workflow intelligently merges these sources to create a precise list of candidates to research for specific election cycles, making the system easily scalable by simply adding new districts to the input sheet. <br> <br> The workflow then iterates through each targeted candidate, making an API call to the official FEC database to pull their detailed financial totals, including receipts, expenditures, and contribution types. To ensure stability and respect API usage limits, the requests are sent in controlled batches with a delay between them. The retrieved data is then programmatically cleaned and standardized before being written to a final destination Google Sheet. The system uses a unique ID to either update existing candidate records or append new ones, ensuring the database is always current, accurate, and free of duplicates.</p>
                   </div>
                 </div>
               </div>
@@ -846,7 +846,7 @@
                       <img src="assets/images/portfolio images/python_s_ballotpedia.jpeg" alt="">
                     </div>
                     <h4 class="modal-title">Ballotpedia Web Scraper</h4>
-                    <p class="description">descriptionhere</p>
+                    <p class="description">This project is a custom Python script that leverages the Selenium library to perform automated web scraping of general election data. Selenium provides the framework for programmatically controlling a web browser, allowing the script to mimic human actions such as navigating web pages, selecting from dropdown menus, and clicking on elements. The script is designed to be configurable, processing a predefined list of political districts to ensure it gathers only the necessary information from a target website. <br> <br> Upon execution, the script systematically launches a browser, navigates to the source of the election data, and iterates through each specified district. For each one, it locates and extracts key results, such as candidate names, party affiliations, and vote totals. This automation replaces a highly repetitive manual data collection task, which not only saves a significant amount of time but also increases the accuracy of the final dataset. The scraped information is then cleaned and organized into a structured file, like a CSV, ready for analysis.</p>
                   </div>
                 </div>
               </div>
@@ -872,7 +872,7 @@
                       <img src="assets/images/portfolio images/automating_us_census.jpeg" alt="">
                     </div>
                     <h4 class="modal-title">US Census Bureau API & Excel Intergration</h4>
-                    <p class="description">descriptionhere.</p>
+                    <p class="description">This workflow automates the retrieval of detailed demographic information for U.S. congressional districts by integrating directly with the U.S. Census Bureau API. The process begins by reading a list of target districts, specified in a "State-District" format (e.g., "CA-52"), from a Google Sheet. This input method makes it easy to manage and scale the research scope. The workflow then intelligently translates the two-letter state codes into the corresponding numerical FIPS codes required by the Census API, preparing the data for the query. <br> <br> For each district on the list, the automation constructs and sends a precise request to the Census API, pulling key demographic data points such as median household income, health insurance coverage, and detailed population age groups. Once the raw data is received, a dedicated code step parses, cleans, and restructures it into a standardized, easy-to-use format. Finally, this clean demographic information is appended or updated in a master Google Sheet, creating a rich, accurate dataset while completely eliminating the need for manual data lookup and entry.</p>
                   </div>
                 </div>
               </div>
