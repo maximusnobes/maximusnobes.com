@@ -2340,6 +2340,7 @@ body{
   height: 100%;
   position: relative;
   transform-style: preserve-3d;
+  /* THIS IS THE KEY ANIMATION LINE */
   transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
   background: var(--card-bg);
   border-radius: 15px;
@@ -2350,6 +2351,10 @@ body{
   padding: 20px;
   text-align: center;
   box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.rolodex-card.flip {
+  transform: rotateX(180deg);
 }
 
 .rolodex-card .proverb-text {
