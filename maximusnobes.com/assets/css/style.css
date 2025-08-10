@@ -2371,6 +2371,12 @@ body{
   margin-top: 15px;
 }
 
+/* Add this new rule to your rolodex CSS */
+.rolodex-card.flip .proverb-text,
+.rolodex-card.flip .proverb-origin {
+  transform: rotateX(180deg);
+}
+
 /* Light theme adjustments for the card */
 .light-theme .rolodex-card {
    box-shadow: 0 4px 12px hsl(0, 0%, 1%, .1);
