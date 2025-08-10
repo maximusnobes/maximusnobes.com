@@ -65,41 +65,38 @@ document.addEventListener("DOMContentLoaded", () => {
    });
 });
 
- /* =====================================================
-+    Generic Modal open/close function
-+ ===================================================== */
- const allCardsWithModals = document.querySelectorAll(".card-with-modal");
- 
- allCardsWithModals.forEach((cardWithModal) => {
-    const card = cardWithModal.querySelector(".service-card, .keyprojects-card");
-    const backdrop = cardWithModal.querySelector(".service-modal-backdrop, .keyprojects-modal-backdrop");
-    const modal = cardWithModal.querySelector(".service-modal, .keyprojects-modal");
-    const closeBtn = cardWithModal.querySelector(".modal-close-btn");
- 
-    if (card && backdrop && modal && closeBtn) {
-        const openModal = () => {
-            backdrop.style.display = "flex";
-            setTimeout(() => {
-                backdrop.classList.add("active");
-                modal.classList.add("active");
-            }, 20);
-        };
- 
-        const closeModal = () => {
-            backdrop.classList.remove("active");
-            modal.classList.remove("active");
-            setTimeout(() => { backdrop.style.display = "none"; }, 500);
-        };
- 
-        card.addEventListener("click", openModal);
-        closeBtn.addEventListener("click", closeModal);
-        backdrop.addEventListener("click", (event) => {
-            if (event.target === backdrop) {
-                closeModal();
-            }
-        });
-    }
- });
+/* =====================================================
+   Generic Modal open/close function
+===================================================== */
+const allCardsWithModals = document.querySelectorAll(".card-with-modal");
+allCardsWithModals.forEach((cardWithModal) => {
+   const card = cardWithModal.querySelector(".service-card, .keyprojects-card");
+   const backdrop = cardWithModal.querySelector(".service-modal-backdrop, .keyprojects-modal-backdrop");
+   const modal = cardWithModal.querySelector(".service-modal, .keyprojects-modal");
+   const closeBtn = cardWithModal.querySelector(".modal-close-btn");
+
+   if (card && backdrop && modal && closeBtn) {
+       const openModal = () => {
+           backdrop.style.display = "flex";
+           setTimeout(() => {
+               backdrop.classList.add("active");
+               modal.classList.add("active");
+           }, 20);
+       };
+       const closeModal = () => {
+           backdrop.classList.remove("active");
+           modal.classList.remove("active");
+           setTimeout(() => { backdrop.style.display = "none"; }, 500);
+       };
+       card.addEventListener("click", openModal);
+       closeBtn.addEventListener("click", closeModal);
+       backdrop.addEventListener("click", (event) => {
+           if (event.target === backdrop) {
+               closeModal();
+           }
+       });
+   }
+});
 
 /* =====================================================
    Testimonial Swiper
@@ -125,36 +122,28 @@ if (testimonialSwiper) {
    Send/Receive emails from contact form - EmailJS
 ===================================================== */
 (function() {
-   // https://dashboard.emailjs.com/admin/account
    emailjs.init({
      publicKey: "Dutvo2lKGBT0Q7wQr",
    });
 })();
-
 const maxContactForm = document.getElementById("max-contact-form");
 const maxContactFormAlert = document.querySelector(".contact-form-alert");
-
 if (maxContactForm) {
     maxContactForm.addEventListener('submit', function(event) {
        event.preventDefault();
-       // these IDs from the previous steps
        emailjs.sendForm('service_x6gqeyr', 'template_xmtrqlg', '#max-contact-form')
            .then(() => {
-             //   console.log('SUCCESS!');
              maxContactFormAlert.innerHTML = "<span>Your message sent successfully!</span> <i class='ri-checkbox-circle-fill'></i>";
              maxContactForm.reset();
-    
              setTimeout(() => {
                 maxContactFormAlert.innerHTML = "";
              }, 5000);
            }, (error) => {
-             //   console.log('FAILED...', error);
              maxContactFormAlert.innerHTML = "<span>Message not sent</span> <i class='ri-error-warning-fill'></i>";
              maxContactFormAlert.title = error;
            });
     });
 }
-
 
 /* =====================================================
    SCROLL EVENT LISTENER (Consolidated)
@@ -163,15 +152,10 @@ const bottomNav = document.querySelector(".bottom-nav");
 const menuHideBtn = document.querySelector(".menu-hide-btn");
 const menuShowBtn = document.querySelector(".menu-show-btn");
 var navTimeout;
-
 window.addEventListener("scroll", () => {
     const scrollY = window.pageYOffset;
-
-    // --- 1. Header shrink logic ---
     const sueHeader = document.querySelector(".sue-header");
     if(sueHeader) sueHeader.classList.toggle("shrink", scrollY > 0);
-
-    // --- 2. To-top-button and scroll indicator logic ---
     const toTopBtn = document.querySelector(".to-top-btn");
     if (toTopBtn) {
         toTopBtn.classList.toggle("active", scrollY > 0);
@@ -182,10 +166,7 @@ window.addEventListener("scroll", () => {
             scrollIndicatorBar.style.height = scrollValue + "%";
         }
     }
-
-    // --- 3. Bottom navigation menu logic ---
     if (bottomNav) {
-        // Visibility Logic
         if (scrollY > 10) {
             if(menuHideBtn) menuHideBtn.classList.add("active");
             clearTimeout(navTimeout);
@@ -198,20 +179,16 @@ window.addEventListener("scroll", () => {
             if(menuHideBtn) menuHideBtn.classList.remove("active");
             if(menuShowBtn) menuShowBtn.classList.remove("active");
         }
-        
-        // Highlighting Logic
         const navMenuSections = document.querySelectorAll(".nav-menu-section");
         const navLinks = document.querySelectorAll(".bottom-nav .menu li a");
         let currentSectionId = "";
-        
         navMenuSections.forEach(section => {
-            const sectionTop = section.offsetTop - 70; // 70px offset
+            const sectionTop = section.offsetTop - 70;
             const sectionHeight = section.offsetHeight;
             if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
                 currentSectionId = section.getAttribute('id');
             }
         });
-        
         navLinks.forEach(link => {
             link.classList.remove("current");
             if (link.getAttribute("href") === "#" + currentSectionId) {
@@ -221,7 +198,6 @@ window.addEventListener("scroll", () => {
     }
 });
 
-
 /* =====================================================
    Bottom Nav Buttons & Initial State
 ===================================================== */
@@ -230,7 +206,6 @@ window.addEventListener("DOMContentLoaded", () => {
       bottomNav.classList.add("active");
    }
 });
-
 if (menuHideBtn) {
     menuHideBtn.addEventListener("click", () => {
         bottomNav.classList.remove("active");
@@ -238,7 +213,6 @@ if (menuHideBtn) {
         menuShowBtn.classList.add("active");
     });
 }
-
 if (menuShowBtn) {
     menuShowBtn.addEventListener("click", () => {
         bottomNav.classList.add("active");
@@ -262,7 +236,6 @@ if (cursor) {
        cursorCircle.style.top = y + "px";
        cursorCircle.style.left = x + "px";
     });
-
     const cursorHoverlinks = document.querySelectorAll("body a, .theme-btn, .sue-main-btn, .keyprojects-card, .swiper-button-next, .swiper-button-prev, .swiper-pagination-bullet, .service-card, .contact-social-links li, .contact-form .submit-btn, .menu-show-btn, .menu-hide-btn");
     cursorHoverlinks.forEach((cursorHoverlink) => {
        cursorHoverlink.addEventListener("mouseover", () => {
@@ -277,6 +250,37 @@ if (cursor) {
 }
 
 /* =====================================================
+    Blog Page - Proverb Rotator (Final Fix)
+===================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+    const rolodexCard = document.querySelector(".rolodex-card");
+    if (rolodexCard) {
+        const proverbs = [
+            { text: "A single bracelet does not jingle.", origin: "Susu Proverb" },
+            { text: "The one who asks questions does not lose his way.", origin: "African Proverb" },
+            { text: "A patient person will eat ripe fruit.", origin: "Guinean Proverb" },
+            { text: "To go fast, go alone. To go far, go together.", origin: "African Proverb" }
+        ];
+
+        let currentIndex = 0;
+        const proverbTextElem = rolodexCard.querySelector(".proverb-text");
+        const proverbOriginElem = rolodexCard.querySelector(".proverb-origin");
+
+        setInterval(() => {
+            rolodexCard.classList.toggle("flip");
+
+            // Update the text halfway through the flip so it appears on the new face
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % proverbs.length;
+                proverbTextElem.textContent = `"${proverbs[currentIndex].text}"`;
+                proverbOriginElem.textContent = `- ${proverbs[currentIndex].origin}`;
+            }, 400); // 400ms is half of the 0.8s CSS transition
+
+        }, 15000); // Changes every 15 seconds
+    }
+});
+
+/* =====================================================
    Website dark/light theme
 ===================================================== */
 const themeBtn = document.querySelector(".theme-btn");
@@ -289,7 +293,6 @@ if (themeBtn) {
        localStorage.setItem("sue-saved-icon", getCurrentIcon());
        localStorage.setItem("sue-saved-theme", getCurrentTheme());
     });
-
     document.addEventListener("DOMContentLoaded", () => {
         const savedIcon = localStorage.getItem("sue-saved-icon");
         const savedTheme = localStorage.getItem("sue-saved-theme");
@@ -311,7 +314,6 @@ if (typeof ScrollReveal !== 'undefined') {
        duration: 2500,
        delay: 400
     });
-
     ScrollReveal().reveal('.avatar-img', { delay: 100, origin: 'top' });
     ScrollReveal().reveal('.avatar-info, .section-title', { delay: 300, origin: 'top' });
     ScrollReveal().reveal('.home-social, .home-scroll-btn, .copy-right', { delay: 600, origin: 'bottom' });
@@ -323,39 +325,3 @@ if (typeof ScrollReveal !== 'undefined') {
     ScrollReveal().reveal('.sue-client-swiper, .contact-form-body', { delay: 700, origin: 'right' });
     ScrollReveal().reveal('.contact-info h3', { delay: 100, origin: 'bottom', interval: 300 });
 }
-/* =====================================================
-+    Blog Page - Proverb Rotator (Final Fix)
-+ ===================================================== */
-+ document.addEventListener("DOMContentLoaded", () => {
-+     const rolodexCard = document.querySelector(".rolodex-card");
-+     if (rolodexCard) {
-+         const proverbs = [
-+             { text: "A single bracelet does not jingle.", origin: "Susu Proverb" },
-+             { text: "The one who asks questions does not lose his way.", origin: "African Proverb" },
-+             { text: "A patient person will eat ripe fruit.", origin: "Guinean Proverb" },
-+             { text: "To go fast, go alone. To go far, go together.", origin: "African Proverb" }
-+         ];
-+ 
-+         let currentIndex = 0;
-+         let rotation = 0; // This will track the current rotation angle
-+         const proverbTextElem = rolodexCard.querySelector(".proverb-text");
-+         const proverbOriginElem = rolodexCard.querySelector(".proverb-origin");
-+ 
-+         setInterval(() => {
-+             // Increase the rotation by 180 degrees for the next flip
-+             rotation += 180;
-+ 
-+             // Apply the new rotation to the card, the CSS transition will handle the animation
-+             rolodexCard.style.transform = `rotateX(${rotation}deg)`;
-+ 
-+             // Update the text halfway through the flip so it appears on the new face
-+             setTimeout(() => {
-+                 currentIndex = (currentIndex + 1) % proverbs.length;
-+                 proverbTextElem.textContent = `"${proverbs[currentIndex].text}"`;
-+                 proverbOriginElem.textContent = `- ${proverbs[currentIndex].origin}`;
-+             }, 400); // 400ms is half of the 0.8s transition, so text changes when the card is edge-on
-+ 
-+         }, 15000); // Changes every 15 seconds
-+     }
-+ });
-
