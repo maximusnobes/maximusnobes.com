@@ -2323,3 +2323,61 @@ body{
   grid-template-columns: 1fr;
   max-width: 550px; /* Optional: Adjusts the width of the card's container */
 }
+/* =========================================
+   Blog Page - Proverb Rolodex
+========================================= */
+.rolodex-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1000px; /* This creates the 3D space for the animation */
+  width: 600px;
+  height: 200px;
+}
+
+.rolodex-card {
+  width: 100%;
+  height: 100%;
+  position: relative;
+  transform-style: preserve-3d;
+  transition: transform 0.8s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+  background: var(--card-bg);
+  border-radius: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  text-align: center;
+  box-shadow: 0 5px 20px rgba(0,0,0,0.1);
+}
+
+.rolodex-card.flip {
+  transform: rotateX(180deg);
+}
+
+.rolodex-card .proverb-text {
+  font-family: 'Times New Roman', Times, serif;
+  font-size: var(--h4-font-size);
+  color: var(--color-02);
+  font-style: italic;
+  font-weight: var(--font-regular);
+}
+
+.rolodex-card .proverb-origin {
+  font-size: var(--small-font-size);
+  color: var(--color-04);
+  margin-top: 15px;
+}
+
+/* Light theme adjustments for the card */
+.light-theme .rolodex-card {
+   box-shadow: 0 4px 12px hsl(0, 0%, 1%, .1);
+}
+
+@media screen and (max-width: 768px){
+  .rolodex-container {
+    width: 90%;
+    height: 180px;
+  }
+}
