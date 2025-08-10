@@ -32,33 +32,6 @@ if (resumeTabs) {
     });
 }
 
-
-/* =====================================================
-   Service modal open/close function
-===================================================== */
-const serviceCardWithModals = document.querySelectorAll(".service-container .card-with-modal");
-
-serviceCardWithModals.forEach((serviceCardWithModal) => {
-   const serviceCard = serviceCardWithModal.querySelector(".service-card");
-   const serviceBackDrop = serviceCardWithModal.querySelector(".service-modal-backdrop");
-   const serviceModal = serviceCardWithModal.querySelector(".service-modal");
-   const modalCloseBtn = serviceCardWithModal.querySelector(".modal-close-btn");
-
-   serviceCard.addEventListener("click", () => {
-      serviceBackDrop.style.display = "flex";
-      setTimeout(() => { serviceBackDrop.classList.add("active"); }, 100);
-      setTimeout(() => { serviceModal.classList.add("active"); }, 300);
-   });
-
-   modalCloseBtn.addEventListener("click", () => {
-      setTimeout(() => { serviceBackDrop.style.display = "none"; }, 500);
-      setTimeout(() => {
-         serviceBackDrop.classList.remove("active");
-         serviceModal.classList.remove("active");
-      }, 100);
-   });
-});
-
 /* =====================================================
    Key Projects modals, tabs and cards
 ===================================================== */
@@ -92,34 +65,41 @@ document.addEventListener("DOMContentLoaded", () => {
    });
 });
 
-const keyprojectsCardsWithModals = document.querySelectorAll(".keyprojects-container .card-with-modal");
-keyprojectsCardsWithModals.forEach((keyprojectsCardWithModal) => {
-   const keyprojectsCard = keyprojectsCardWithModal.querySelector(".keyprojects-card");
-   const keyprojectsBackdrop = keyprojectsCardWithModal.querySelector(".keyprojects-modal-backdrop");
-   const keyprojectsModal = keyprojectsCardWithModal.querySelector(".keyprojects-modal");
-   const modalCloseBtn = keyprojectsCardWithModal.querySelector(".modal-close-btn");
-
-   const closeModal = () => {
-      keyprojectsBackdrop.classList.remove("active");
-      keyprojectsModal.classList.remove("active");
-      setTimeout(() => { keyprojectsBackdrop.style.display = "none"; }, 500);
-   }
-
-   keyprojectsCard.addEventListener("click", () => {
-      keyprojectsBackdrop.style.display = "flex";
-      setTimeout(() => {
-         keyprojectsBackdrop.classList.add("active");
-         keyprojectsModal.classList.add("active");
-      }, 20);
-   });
-
-   modalCloseBtn.addEventListener("click", closeModal);
-   keyprojectsBackdrop.addEventListener("click", (event) => {
-      if (event.target === keyprojectsBackdrop) {
-         closeModal();
-      }
-   });
-});
+ /* =====================================================
++    Generic Modal open/close function
++ ===================================================== */
+ const allCardsWithModals = document.querySelectorAll(".card-with-modal");
+ 
+ allCardsWithModals.forEach((cardWithModal) => {
+    const card = cardWithModal.querySelector(".service-card, .keyprojects-card");
+    const backdrop = cardWithModal.querySelector(".service-modal-backdrop, .keyprojects-modal-backdrop");
+    const modal = cardWithModal.querySelector(".service-modal, .keyprojects-modal");
+    const closeBtn = cardWithModal.querySelector(".modal-close-btn");
+ 
+    if (card && backdrop && modal && closeBtn) {
+        const openModal = () => {
+            backdrop.style.display = "flex";
+            setTimeout(() => {
+                backdrop.classList.add("active");
+                modal.classList.add("active");
+            }, 20);
+        };
+ 
+        const closeModal = () => {
+            backdrop.classList.remove("active");
+            modal.classList.remove("active");
+            setTimeout(() => { backdrop.style.display = "none"; }, 500);
+        };
+ 
+        card.addEventListener("click", openModal);
+        closeBtn.addEventListener("click", closeModal);
+        backdrop.addEventListener("click", (event) => {
+            if (event.target === backdrop) {
+                closeModal();
+            }
+        });
+    }
+ });
 
 /* =====================================================
    Testimonial Swiper
@@ -343,3 +323,37 @@ if (typeof ScrollReveal !== 'undefined') {
     ScrollReveal().reveal('.sue-client-swiper, .contact-form-body', { delay: 700, origin: 'right' });
     ScrollReveal().reveal('.contact-info h3', { delay: 100, origin: 'bottom', interval: 300 });
 }
+/* =====================================================
+   Blog Page - Proverb Rotator
+===================================================== */
+document.addEventListener("DOMContentLoaded", () => {
+    const rolodexCard = document.querySelector(".rolodex-card");
+    if (rolodexCard) {
+        const proverbs = [
+            { text: "A single bracelet does not jingle.", origin: "Susu Proverb" },
+            { text: "The one who asks questions does not lose his way.", origin: "African Proverb" },
+            { text: "A patient person will eat ripe fruit.", origin: "Guinean Proverb" },
+            { text: "To go fast, go alone. To go far, go together.", origin: "African Proverb" }
+        ];
+
+        let currentIndex = 0;
+        const proverbTextElem = rolodexCard.querySelector(".proverb-text");
+        const proverbOriginElem = rolodexCard.querySelector(".proverb-origin");
+
+        setInterval(() => {
+            // Add the 'flip' class to trigger the animation
+            rolodexCard.classList.add("flip");
+
+            // After the flip animation is partway through, change the text
+            setTimeout(() => {
+                currentIndex = (currentIndex + 1) % proverbs.length;
+                proverbTextElem.textContent = `"${proverbs[currentIndex].text}"`;
+                proverbOriginElem.textContent = `- ${proverbs[currentIndex].origin}`;
+                
+                // Remove the class so it can flip back and be re-triggered
+                rolodexCard.classList.remove("flip");
+            }, 400); // This should be half of the CSS transition duration
+
+        }, 15000); // 15 seconds
+    }
+});
