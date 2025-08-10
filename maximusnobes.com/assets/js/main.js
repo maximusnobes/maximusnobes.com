@@ -324,36 +324,39 @@ if (typeof ScrollReveal !== 'undefined') {
     ScrollReveal().reveal('.contact-info h3', { delay: 100, origin: 'bottom', interval: 300 });
 }
 /* =====================================================
-   Blog Page - Proverb Rotator
-===================================================== */
-document.addEventListener("DOMContentLoaded", () => {
-    const rolodexCard = document.querySelector(".rolodex-card");
-    if (rolodexCard) {
-        const proverbs = [
-            { text: "A single bracelet does not jingle.", origin: "Susu Proverb" },
-            { text: "The one who asks questions does not lose his way.", origin: "African Proverb" },
-            { text: "A patient person will eat ripe fruit.", origin: "Guinean Proverb" },
-            { text: "To go fast, go alone. To go far, go together.", origin: "African Proverb" }
-        ];
-
-        let currentIndex = 0;
-        const proverbTextElem = rolodexCard.querySelector(".proverb-text");
-        const proverbOriginElem = rolodexCard.querySelector(".proverb-origin");
-
-        setInterval(() => {
-            // Add the 'flip' class to trigger the animation
-            rolodexCard.classList.add("flip");
-
-            // After the flip animation is partway through, change the text
-            setTimeout(() => {
-                currentIndex = (currentIndex + 1) % proverbs.length;
-                proverbTextElem.textContent = `"${proverbs[currentIndex].text}"`;
-                proverbOriginElem.textContent = `- ${proverbs[currentIndex].origin}`;
-                
-                // Remove the class so it can flip back and be re-triggered
-                rolodexCard.classList.remove("flip");
-            }, 400); // This should be half of the CSS transition duration
-
-        }, 15000); // 15 seconds
-    }
-});
+    Blog Page - Proverb Rotator (Corrected)
+ ===================================================== */
+ document.addEventListener("DOMContentLoaded", () => {
+     const rolodexCard = document.querySelector(".rolodex-card");
+     if (rolodexCard) {
+         const proverbs = [
+             { text: "A single bracelet does not jingle.", origin: "Susu Proverb" },
+             { text: "The one who asks questions does not lose his way.", origin: "African Proverb" },
+             { text: "A patient person will eat ripe fruit.", origin: "Guinean Proverb" },
+             { text: "To go fast, go alone. To go far, go together.", origin: "African Proverb" }
+         ];
+ 
+         let currentIndex = 0;
+         const proverbTextElem = rolodexCard.querySelector(".proverb-text");
+         const proverbOriginElem = rolodexCard.querySelector(".proverb-origin");
+ 
+         // Set the transition property on the card for smooth fading
+         rolodexCard.style.transition = 'opacity 0.6s ease-in-out';
+ 
+         setInterval(() => {
+             // 1. Fade out the card
+             rolodexCard.style.opacity = '0';
+ 
+             // 2. Wait for the fade-out to finish, then change the text and fade back in
+             setTimeout(() => {
+                 currentIndex = (currentIndex + 1) % proverbs.length;
+                 proverbTextElem.textContent = `"${proverbs[currentIndex].text}"`;
+                 proverbOriginElem.textContent = `- ${proverbs[currentIndex].origin}`;
+ 
+                 // 3. Fade the card back in with the new content
+                 rolodexCard.style.opacity = '1';
+             }, 600); // This delay MUST match the CSS transition duration
+ 
+         }, 15000); // Changes every 15 seconds
+     }
+ });
