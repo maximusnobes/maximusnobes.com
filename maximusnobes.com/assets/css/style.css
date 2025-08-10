@@ -2352,10 +2352,6 @@ body{
   box-shadow: 0 5px 20px rgba(0,0,0,0.1);
 }
 
-.rolodex-card.flip {
-  transform: rotateX(180deg);
-}
-
 .rolodex-card .proverb-text {
   font-family: 'Times New Roman', Times, serif;
   font-size: var(--h4-font-size);
