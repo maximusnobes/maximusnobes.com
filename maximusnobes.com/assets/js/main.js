@@ -256,10 +256,16 @@ if (cursor) {
 +     const rolodexCard = document.querySelector(".rolodex-card");
 +     if (rolodexCard) {
 +         const proverbs = [
-+             { text: "A single bracelet does not jingle.", origin: "Susu Proverb" },
-+             { text: "The one who asks questions does not lose his way.", origin: "African Proverb" },
-+             { text: "A patient person will eat ripe fruit.", origin: "Guinean Proverb" },
-+             { text: "To go fast, go alone. To go far, go together.", origin: "African Proverb" }
++             { text: "No matter how long a log lies in the water, it won't turn into a crocodile.", origin: "Susu Proverb" },
++             { text: "Always forward, never straight.", origin: "Proverb" },
++             { text: "Idealism increases in direct proportion to one's distance from the problem.", origin: "John Galsworthy" },
+              { text: "The purpose of life after all, is to live it, to taste experience to the utmost, to reach out eagerly and without fear.", origin: "Eleanor Rosevelt" },
++             { text: "The people walking in darkness have seen a great light; on those living in the land of deep darkness a light has dawned.", origin: "Isaiah 9:2" },
+              { text: "Just assume there is pain everywhere. No one gets out of this thing alive.", origin: "Jennifer Grey" },
++             { text: "To know the progress of a nation, look at it's women.", origin: "French Proverb" },
+              { text: "Adorn your mind with knowledge, not your body with jewels.", origin: "Chinese Proverb" },
++             { text: "It is useless to pursue the world, no one will ever overtake it.", origin: "Bourdieu" },
++             { text: "There is always more surface to a shattered object than a whole.", origin: "Djuna Barnes" }
 +         ];
 + 
 +         let currentIndex = 0;
@@ -326,4 +332,5 @@ if (typeof ScrollReveal !== 'undefined') {
     ScrollReveal().reveal('.sue-client-swiper, .contact-form-body', { delay: 700, origin: 'right' });
     ScrollReveal().reveal('.contact-info h3', { delay: 100, origin: 'bottom', interval: 300 });
 }
+
 
