@@ -250,35 +250,36 @@ if (cursor) {
 }
 
 /* =====================================================
-    Blog Page - Proverb Rotator (Final Fix)
-===================================================== */
-document.addEventListener("DOMContentLoaded", () => {
-    const rolodexCard = document.querySelector(".rolodex-card");
-    if (rolodexCard) {
-        const proverbs = [
-            { text: "A single bracelet does not jingle.", origin: "Susu Proverb" },
-            { text: "The one who asks questions does not lose his way.", origin: "African Proverb" },
-            { text: "A patient person will eat ripe fruit.", origin: "Guinean Proverb" },
-            { text: "To go fast, go alone. To go far, go together.", origin: "African Proverb" }
-        ];
-
-        let currentIndex = 0;
-        const proverbTextElem = rolodexCard.querySelector(".proverb-text");
-        const proverbOriginElem = rolodexCard.querySelector(".proverb-origin");
-
-        setInterval(() => {
-            rolodexCard.classList.toggle("flip");
-
-            // Update the text halfway through the flip so it appears on the new face
-            setTimeout(() => {
-                currentIndex = (currentIndex + 1) % proverbs.length;
-                proverbTextElem.textContent = `"${proverbs[currentIndex].text}"`;
-                proverbOriginElem.textContent = `- ${proverbs[currentIndex].origin}`;
-            }, 400); // 400ms is half of the 0.8s CSS transition
-
-        }, 15000); // Changes every 15 seconds
-    }
-});
++    Blog Page - Proverb Rotator (Final Fix v2)
++ ===================================================== */
++ document.addEventListener("DOMContentLoaded", () => {
++     const rolodexCard = document.querySelector(".rolodex-card");
++     if (rolodexCard) {
++         const proverbs = [
++             { text: "A single bracelet does not jingle.", origin: "Susu Proverb" },
++             { text: "The one who asks questions does not lose his way.", origin: "African Proverb" },
++             { text: "A patient person will eat ripe fruit.", origin: "Guinean Proverb" },
++             { text: "To go fast, go alone. To go far, go together.", origin: "African Proverb" }
++         ];
++ 
++         let currentIndex = 0;
++         const proverbTextElem = rolodexCard.querySelector(".proverb-text");
++         const proverbOriginElem = rolodexCard.querySelector(".proverb-origin");
++ 
++         setInterval(() => {
++             // This command simply adds or removes the "flip" class, creating a back-and-forth animation
++             rolodexCard.classList.toggle("flip");
++ 
++             // Update the text halfway through the flip
++             setTimeout(() => {
++                 currentIndex = (currentIndex + 1) % proverbs.length;
++                 proverbTextElem.textContent = `"${proverbs[currentIndex].text}"`;
++                 proverbOriginElem.textContent = `- ${proverbs[currentIndex].origin}`;
++             }, 400); // Half of the 0.8s CSS transition
++ 
++         }, 15000); // Changes every 15 seconds
++     }
++ });
 
 /* =====================================================
    Website dark/light theme
@@ -325,3 +326,4 @@ if (typeof ScrollReveal !== 'undefined') {
     ScrollReveal().reveal('.sue-client-swiper, .contact-form-body', { delay: 700, origin: 'right' });
     ScrollReveal().reveal('.contact-info h3', { delay: 100, origin: 'bottom', interval: 300 });
 }
+
