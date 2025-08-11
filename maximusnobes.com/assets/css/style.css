@@ -256,7 +256,7 @@ body{
 }
 
 .cursor-dot{
-   position: absolute;
+   ;
    background: var(--primary-color);
    width: 5px;
    height: 5px;
@@ -275,7 +275,7 @@ body{
 }
 
 .cursor-circle{
-   position: absolute;
+   ;
    border: 2px solid var(--primary-color);
    width: 30px;
    height: 30px;
@@ -313,7 +313,7 @@ body{
 }
 
 .to-top-btn a span{
-   position: absolute;
+   ;
    left: 0;
    bottom: 155px;
    transform: rotateZ(90deg);
@@ -324,7 +324,7 @@ body{
 }
 
 .to-top-btn .scroll-indicator-bar{
-   position: absolute;
+   ;
    background: var(--color-01);
    width: 2px;
    height: auto;
@@ -437,7 +437,7 @@ body{
 }
 
 .theme-btn i{
-   position: absolute;
+   ;
    color: var(--color-01);
    font-size: 1.7rem;
    cursor: pointer;
@@ -536,7 +536,7 @@ body{
 
 .bottom-nav .menu li a span{
    z-index: var(--z-tooltip);
-   position: absolute;
+   ;
    color: var(--dark-color);
    background: var(--primary-color);
    font-size: var(--tiny-font-size);
@@ -555,7 +555,7 @@ body{
 .bottom-nav .menu li a span:before{
    content: "";
    z-index: var(--z-minus);
-   position: absolute;
+   ;
    background: var(--primary-color);
    width: 10px;
    height: 10px;
@@ -566,7 +566,7 @@ body{
 
 .bottom-nav .menu-hide-btn{
    z-index: var(--z-fixed);
-   position: absolute;
+   ;
    top: -5px;
    right: 0;
    color: var(--dark-color);
@@ -692,12 +692,12 @@ body{
 }
 
 .avatar-img img{
-   position: absolute;
+   ;
    width: 100%;
 }
 
 .home-social{
-   position: absolute;
+   ;
    left: 0;
 }
 
@@ -768,9 +768,10 @@ body{
 }
 
 .home-scroll-btn{
-   position: absolute;
-   right: -5px;
+   position: fixed;
+   right: 30px;
    color: var(--color-01);
+   top: 50%;
    display: grid;
    justify-items: center;
    row-gap: 3px;
