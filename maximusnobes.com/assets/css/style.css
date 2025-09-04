@@ -29,7 +29,7 @@
    --color-01: hsl(var(--hue) var(--sat) var(--light)); /* primary to dark */
    --color-02: hsl(var(--hue) 45% 98%); /* white to dark */
    --color-03: hsl(var(--hue) 26% 12%); /* dark to white */
-   --color-04: hsl(var(--hue) 0% 62%); /* light-graygray to dark-gray */
+   --color-04: hsl(var(--hue) 0% 62%); /* light-gray to dark-gray */
    --color-05: hsl(var(--hue) 26% 12%); /* dark to primary */
 
    --body-color: hsl(250 26% 12%); /* dark to white */
@@ -498,7 +498,7 @@ body{
 .bottom-nav .menu{
    background: var(--bottom-nav-bg);
    backdrop-filter: blur(10px);
-   padding: 16px 35px;
+   padding: 8px 35px;
    display: flex;
    justify-content: center;
    align-items: center;
@@ -697,8 +697,10 @@ body{
 }
 
 .home-social{
-   ;
-   left: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  left: 0;
 }
 
 .home-social span{
@@ -717,7 +719,6 @@ body{
    height: 100px;
    margin-top: 37px;
    margin-bottom: 25px;
-   margin-left: 10px;
 }
 
 .home-social .social-icons{
