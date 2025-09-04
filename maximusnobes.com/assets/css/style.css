@@ -437,11 +437,11 @@ body{
 }
 
 .theme-btn i{
-   ;
-   color: var(--color-01);
-   font-size: 1.7rem;
-   cursor: pointer;
-   transition: .3s;
+  position: absolute;
+  color: var(--color-01);
+  font-size: 1.7rem;
+  cursor: pointer;
+  transition: .3s;
 }
 
 .theme-btn:hover i{
@@ -697,11 +697,13 @@ body{
 }
 
 .home-social{
-  position: relative;
+  position: absolute;
+  left: 50px;
+  top: 50%;
+  transform: translateY(-50%);
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  left: 0;
 }
 
 .home-social span{
