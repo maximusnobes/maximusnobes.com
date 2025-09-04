@@ -510,15 +510,11 @@ body{
 }
 
 .bottom-nav .menu li a{
+   position: relative;
    display: flex;
    justify-content: center;
    align-items: center;
    flex-direction: column;
-}
-
-.bottom-nav .menu li {
-  display: flex;
-  align-items: center;
 }
 
 .bottom-nav .menu li a i{
@@ -540,17 +536,19 @@ body{
 }
 
 .bottom-nav .menu li a span{
+   position: absolute; /* Takes the tooltip out of the layout flow */
+   bottom: 110%; /* Positions it above the icon */
+   white-space: nowrap; /* Prevents long text from wrapping */
    z-index: var(--z-tooltip);
-   ;
    color: var(--dark-color);
    background: var(--primary-color);
    font-size: var(--tiny-font-size);
    font-weight: var(--font-medium);
    padding: 3px 10px;
-   transform: translateY(-53px);
    border-radius: 5px;
    pointer-events: none;
    opacity: 0;
+   transition: opacity 0.3s; /* Ensures the hover effect still works */
 }
 
 .bottom-nav .menu li:hover a span{
