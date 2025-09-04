@@ -210,13 +210,17 @@ window.addEventListener("scroll", () => {
             if(menuHideBtn) menuHideBtn.classList.add("active");
             clearTimeout(navTimeout);
             navTimeout = setTimeout(() => {
-                bottomNav.classList.remove("active");
-                if (menuShowBtn) menuShowBtn.classList.add("active");
+                // Only hide the menu if it was not manually opened
+                if (!menuManuallyOpened) {
+                    bottomNav.classList.remove("active");
+                    if (menuShowBtn) menuShowBtn.classList.add("active");
+                }
             }, 2500);
         } else {
             bottomNav.classList.add("active");
             if(menuHideBtn) menuHideBtn.classList.remove("active");
             if(menuShowBtn) menuShowBtn.classList.remove("active");
+            menuManuallyOpened = false; // Reset state when back at top
         }
         
         // Highlighting Logic
@@ -225,12 +229,19 @@ window.addEventListener("scroll", () => {
         let currentSectionId = "";
         
         navMenuSections.forEach(section => {
-            const sectionTop = section.offsetTop - 70; // 70px offset
+            const sectionTop = section.offsetTop - 70;
             const sectionHeight = section.offsetHeight;
             if (scrollY >= sectionTop && scrollY < sectionTop + sectionHeight) {
                 currentSectionId = section.getAttribute('id');
             }
         });
+
+        // --- HIGHLIGHTING FIX ---
+        // Check if user is at the bottom of the page
+        const isAtBottom = window.innerHeight + scrollY >= document.documentElement.scrollHeight - 10;
+        if (isAtBottom) {
+            currentSectionId = navMenuSections[navMenuSections.length - 1].getAttribute('id');
+        }
         
         navLinks.forEach(link => {
             link.classList.remove("current");
@@ -245,6 +256,8 @@ window.addEventListener("scroll", () => {
 /* =====================================================
    Bottom Nav Buttons & Initial State
 ===================================================== */
+let menuManuallyOpened = false;
+
 window.addEventListener("DOMContentLoaded", () => {
    if (window.scrollY < 10 && bottomNav) {
       bottomNav.classList.add("active");
@@ -254,8 +267,8 @@ window.addEventListener("DOMContentLoaded", () => {
 if (menuHideBtn) {
     menuHideBtn.addEventListener("click", () => {
         bottomNav.classList.remove("active");
-        menuHideBtn.classList.remove("active");
         menuShowBtn.classList.add("active");
+        menuManuallyOpened = false;
     });
 }
 
@@ -264,6 +277,7 @@ if (menuShowBtn) {
         bottomNav.classList.add("active");
         menuHideBtn.classList.add("active");
         menuShowBtn.classList.remove("active");
+        menuManuallyOpened = true; // User has shown it, so set the state
     });
 }
 
@@ -343,3 +357,4 @@ if (typeof ScrollReveal !== 'undefined') {
     ScrollReveal().reveal('.sue-client-swiper, .contact-form-body', { delay: 700, origin: 'right' });
     ScrollReveal().reveal('.contact-info h3', { delay: 100, origin: 'bottom', interval: 300 });
 }
+
