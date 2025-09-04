@@ -516,10 +516,15 @@ body{
    flex-direction: column;
 }
 
+.bottom-nav .menu li {
+  display: flex;
+  align-items: center;
+}
+
 .bottom-nav .menu li a i{
    color: var(--color-02);
    font-size: 1.4rem;
-   padding: 10px;
+   padding: 8px;
    border-radius: 50%;
    transition: .3s;
 }
