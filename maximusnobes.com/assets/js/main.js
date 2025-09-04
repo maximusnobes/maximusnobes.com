@@ -348,7 +348,7 @@ if (typeof ScrollReveal !== 'undefined') {
 
     ScrollReveal().reveal('.avatar-img', { delay: 100, origin: 'top' });
     ScrollReveal().reveal('.avatar-info, .section-title', { delay: 300, origin: 'top' });
-    ScrollReveal().reveal('.home-social, .home-scroll-btn, .copy-right', { delay: 600, origin: 'bottom' });
+    ScrollReveal().reveal('.home-scroll-btn, .copy-right', { delay: 600, origin: 'bottom' });
     ScrollReveal().reveal('.about-img', { delay: 700, origin: 'top' });
     ScrollReveal().reveal('.about-info, .sue-footer .sue-logo', { delay: 300, origin: 'bottom' });
     ScrollReveal().reveal('.pro-card, .about-buttons .sue-main-btn, .resume-tabs .tab-btn, .keyprojects-tabs .tab-btn', { delay: 500, origin: 'right', interval: 200 });
@@ -357,4 +357,5 @@ if (typeof ScrollReveal !== 'undefined') {
     ScrollReveal().reveal('.sue-client-swiper, .contact-form-body', { delay: 700, origin: 'right' });
     ScrollReveal().reveal('.contact-info h3', { delay: 100, origin: 'bottom', interval: 300 });
 }
+
 
