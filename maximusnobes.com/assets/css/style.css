@@ -895,6 +895,7 @@ body{
    column-gap: 20px;
    row-gap: 25px;
    justify-content: center;
+   padding-left: 40px;
 }
 
 /* =========================================
