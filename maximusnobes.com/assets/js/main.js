@@ -242,6 +242,20 @@ window.addEventListener("scroll", () => {
             }
         });
     }
+        // --- HIGHLIGHTING FIX ---
+        // Check if user is at the bottom of the page
+        const isAtBottom = window.innerHeight + scrollY >= document.documentElement.scrollHeight - 10;
+        if (isAtBottom) {
+            currentSectionId = navMenuSections[navMenuSections.length - 1].getAttribute('id');
+        }
+        navLinks.forEach(link => {
+            link.classList.remove("current");
+            if (link.getAttribute("href") === "#" + currentSectionId) {
+                link.classList.add("current");
+            }
+        });
+    }
+}); 
 /* =====================================================
    Bottom Nav Buttons & Initial State
 ===================================================== */
@@ -346,6 +360,7 @@ if (typeof ScrollReveal !== 'undefined') {
     ScrollReveal().reveal('.sue-client-swiper, .contact-form-body', { delay: 700, origin: 'right' });
     ScrollReveal().reveal('.contact-info h3', { delay: 100, origin: 'bottom', interval: 300 });
 }
+
 
 
 
