@@ -203,51 +203,38 @@ window.addEventListener("scroll", () => {
         }
     }
 
-// --- 3. Bottom navigation menu logic ---
-    if (bottomNav) {
-        // Visibility Logic
-        if (scrollY > 10) {
-            if(menuHideBtn) menuHideBtn.classList.add("active");
-            clearTimeout(navTimeout);
-            navTimeout = setTimeout(() => {
-                // Only hide the menu if it was not manually opened
-                if (!menuManuallyOpened) {
-                    bottomNav.classList.remove("active");
-                    if (menuShowBtn) menuShowBtn.classList.add("active");
-                }
-            }, 2500);
-        } else {
-            bottomNav.classList.add("active");
-            if(menuHideBtn) menuHideBtn.classList.remove("active");
-            if(menuShowBtn) menuShowBtn.classList.remove("active");
-            menuManuallyOpened = false; // Reset state when back at top
-        }
-        
-        // Highlighting Logic
-        const navMenuSections = document.querySelectorAll(".nav-menu-section");
-        const navLinks = document.querySelectorAll(".bottom-nav .menu li a");
-        let currentSectionId = "";
-        
-        navMenuSections.forEach(section => {
-            const sectionTop = section.offsetTop - 70;
-            if (scrollY >= sectionTop) {
-                currentSectionId = section.getAttribute('id');
-            }
-        });
-        
-        navLinks.forEach(link => {
-            link.classList.remove("current");
-            if (link.getAttribute("href") === "#" + currentSectionId) {
-                link.classList.add("current");
-            }
-        });
-    }
-        // --- HIGHLIGHTING FIX ---
-        // Check if user is at the bottom of the page
-        const isAtBottom = window.innerHeight + scrollY >= document.documentElement.scrollHeight - 10;
-        if (isAtBottom) {
-            currentSectionId = navMenuSections[navMenuSections.length - 1].getAttribute('id');
+    // --- 3. Bottom navigation menu logic ---
+    if (bottomNav) {
+        // Visibility Logic
+        if (scrollY > 10) {
+            if(menuHideBtn) menuHideBtn.classList.add("active");
+            clearTimeout(navTimeout);
+            navTimeout = setTimeout(() => {
+                // Only hide the menu if it was not manually opened
+                if (!menuManuallyOpened) {
+                    bottomNav.classList.remove("active");
+                    if (menuShowBtn) menuShowBtn.classList.add("active");
+                }
+            }, 2500);
+        } else {
+            bottomNav.classList.add("active");
+            if(menuHideBtn) menuHideBtn.classList.remove("active");
+            if(menuShowBtn) menuShowBtn.classList.remove("active");
+            menuManuallyOpened = false; // Reset state when back at top
         }
+        
+        // Highlighting Logic
+        const navMenuSections = document.querySelectorAll(".nav-menu-section");
+        const navLinks = document.querySelectorAll(".bottom-nav .menu li a");
+        let currentSectionId = "";
+        
+        navMenuSections.forEach(section => {
+            const sectionTop = section.offsetTop - 70;
+            if (scrollY >= sectionTop) {
+                currentSectionId = section.getAttribute('id');
+            }
+        });
+        
         navLinks.forEach(link => {
             link.classList.remove("current");
             if (link.getAttribute("href") === "#" + currentSectionId) {
@@ -255,7 +242,7 @@ window.addEventListener("scroll", () => {
             }
         });
     }
-}); 
+});
 /* =====================================================
    Bottom Nav Buttons & Initial State
 ===================================================== */
@@ -360,6 +347,7 @@ if (typeof ScrollReveal !== 'undefined') {
     ScrollReveal().reveal('.sue-client-swiper, .contact-form-body', { delay: 700, origin: 'right' });
     ScrollReveal().reveal('.contact-info h3', { delay: 100, origin: 'bottom', interval: 300 });
 }
+
 
 
 
