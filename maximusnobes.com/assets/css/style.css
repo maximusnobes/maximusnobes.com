@@ -699,9 +699,12 @@ body{
    width: 100%;
 }
 
+/* Fixed to the viewport so it follows the visitor down the page,
+   mirroring the "Scroll Down" button on the right edge. */
 .home-social{
-  position: absolute;
-  left: 50px;
+  z-index: var(--z-fixed);
+  position: fixed;
+  left: 30px;
   top: 50%;
   transform: translateY(-50%);
   display: flex;
@@ -1891,6 +1894,11 @@ body{
    .keyprojects-container {
       grid-template-columns: repeat(2, 1fr);
    }
+
+   /* Tuck the fixed social bar into the 50px side margin */
+   .home-social {
+      left: 12px;
+   }
 }
 
 /* =========================================
@@ -2013,6 +2021,13 @@ body{
 
    .bottom-nav .menu li a i {
       font-size: 1.25rem;
+   }
+
+   /* Side margins are too narrow here for a fixed bar to sit beside the
+      content, so it goes back to sitting on the home screen only */
+   .home-social {
+      position: absolute;
+      left: 0;
    }
 
    .home-social .social-line {
