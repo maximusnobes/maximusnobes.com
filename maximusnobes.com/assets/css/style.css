@@ -256,7 +256,7 @@ body{
 }
 
 .cursor-dot{
-   ;
+   position: absolute;
    background: var(--primary-color);
    width: 5px;
    height: 5px;
@@ -275,7 +275,7 @@ body{
 }
 
 .cursor-circle{
-   ;
+   position: absolute;
    border: 2px solid var(--primary-color);
    width: 30px;
    height: 30px;
@@ -313,7 +313,7 @@ body{
 }
 
 .to-top-btn a span{
-   ;
+   position: absolute;
    left: 0;
    bottom: 155px;
    transform: rotateZ(90deg);
@@ -324,7 +324,7 @@ body{
 }
 
 .to-top-btn .scroll-indicator-bar{
-   ;
+   position: absolute;
    background: var(--color-01);
    width: 2px;
    height: auto;
@@ -558,7 +558,7 @@ body{
 .bottom-nav .menu li a span:before{
    content: "";
    z-index: var(--z-minus);
-   ;
+   position: absolute;
    background: var(--primary-color);
    width: 10px;
    height: 10px;
@@ -569,7 +569,7 @@ body{
 
 .bottom-nav .menu-hide-btn{
    z-index: var(--z-fixed);
-   ;
+   position: absolute;
    top: -5px;
    right: 0;
    color: var(--dark-color);
@@ -690,13 +690,26 @@ body{
 
 .avatar-img{
    position: relative;
-   width: 425px;
-   height: 425px;
+   width: 360px;
+   aspect-ratio: 1023 / 1256; /* the portrait's real proportions */
 }
 
-.avatar-img img{
-   ;
+/* The shirt runs off the edges of the drawing, so fade it out at the
+   bottom and sides instead of showing a hard-cut rectangle. */
+.avatar-img img,
+.about-img img{
+   display: block;
    width: 100%;
+   height: 100%;
+   object-fit: contain;
+   -webkit-mask-image:
+      linear-gradient(to bottom, #000 70%, transparent 97%),
+      linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+   -webkit-mask-composite: source-in;
+   mask-image:
+      linear-gradient(to bottom, #000 70%, transparent 97%),
+      linear-gradient(to right, transparent 0, #000 12%, #000 88%, transparent 100%);
+   mask-composite: intersect;
 }
 
 /* Fixed to the viewport so it follows the visitor down the page,
@@ -832,9 +845,8 @@ body{
    pointer-events: none;
 }
 
-.about-img img{
-   width: 100%;
-   border-radius: 15px;
+.about-img{
+   aspect-ratio: 1023 / 1256;
 }
 
 .about-details{
@@ -1844,8 +1856,7 @@ body{
    }
 
    .avatar-img {
-      width: 385px;
-      height: 385px;
+      width: 330px;
    }
 }
 
@@ -1919,11 +1930,12 @@ body{
    }
 
    .avatar-img {
-      width: 350px;
+      width: 280px;
    }
    
    .avatar-info .text-content {
       align-items: center;
+      text-align: center;
    }
 
    .service-container {
@@ -2175,9 +2187,7 @@ body{
    }
 
    .avatar-img {
-      width: 85%;
-      height: fit-content;
-      padding-bottom: 94%;
+      width: 65%;
    }
 
    .bottom-nav {
@@ -2413,4 +2423,9 @@ body{
     width: 90%;
     height: 180px;
   }
+}
+
+/* Link buttons inside Key Projects popups */
+.keyprojects-modal .modal-link{
+   align-self: flex-start;
 }
